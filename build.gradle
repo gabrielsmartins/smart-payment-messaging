@@ -1,0 +1,94 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.2.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+}
+
+allprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+
+    group = 'br.gabrielsmartins.smartpayment'
+    version = '0.0.1-SNAPSHOT'
+
+    ext {
+        springBootVersion = '2.2.8.RELEASE'
+        springCloudVersion = 'Hoxton.SR5'
+        lombokVersion = '1.18.12'
+        junitVersion = '5.6.2'
+        junitPlatformVersion = '1.6.2'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    jacoco {
+        toolVersion = '0.8.5'
+    }
+
+    dependencies {
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+        testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+        testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: junitPlatformVersion
+        testImplementation group: 'org.junit.platform', name: 'junit-platform-engine', version: junitPlatformVersion
+    }
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+dependencyManagement {
+    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+}
+
+configurations {
+    compileClasspath
+}
+
+subprojects {
+
+    test {
+        useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
+    }
+
+    dependencies {
+        // Lombok
+        implementation group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+        testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+        testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    }
+
+    jacocoTestReport {
+        reports {
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
+            html.destination file("${buildDir}/jacocoHtml")
+        }
+    }
+
+}
+
+test {
+    useJUnitPlatform()
+}

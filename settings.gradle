@@ -1,0 +1,6 @@
+rootProject.name = 'smart-payment-messaging'
+
+include ':application'
+include ':common'
+include ':adapters:persistence'
+include ':adapters:messaging'

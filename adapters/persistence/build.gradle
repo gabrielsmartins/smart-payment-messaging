@@ -1,0 +1,12 @@
+group 'br.gabrielsmartins.smartpayment.adapters.persistence'
+
+dependencies {
+   testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+	}
+ }
+   
