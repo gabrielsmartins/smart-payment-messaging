@@ -1,26 +1,47 @@
 package br.gabrielsmartins.smartpayment.messaging.application.domain.orders;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
-@RequiredArgsConstructor
+
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"paymentMethods"})
+@Builder(setterPrefix = "with")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
-	@Setter(AccessLevel.NONE)
-	private final String id;
+	private String id;
 	private String paymentNumberIdentifier;
 	private LocalDate dueDate;
 	private LocalDate paymentDate;
 	private BigDecimal totalAmount;
-	private BigDecimal discount;
 	private BigDecimal totalAmountPaid;
-	private PaymentType paymentType;
+	private final List<OrderPaymentMethod> paymentMethods = new LinkedList<>();
+
+	public Integer addPaymentMethod(OrderPaymentMethod paymentMethod) {
+		this.paymentMethods.add(paymentMethod);
+		return this.paymentMethods.size();
+	}
+
+	@Getter
+	@Setter
+	@ToString
+	@Builder(setterPrefix = "with")
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class OrderPaymentMethod {
+
+		private Order order;
+		private BigDecimal discount;
+		private BigDecimal totalAmountPaid;
+		private PaymentType paymentType;
+	}
 
 }

@@ -1,42 +1,50 @@
 package br.gabrielsmartins.smartpayment.messaging.application.domain.payments;
 
+import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.messaging.application.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.strategy.PaymentStrategy;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
-import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.strategy.PaymentStrategy;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter @Setter
+@ToString(exclude = {"paymentMethods"})
+@Builder(setterPrefix = "with")
 public class Payment {
-	
-	@Getter
-	private final String id;
-	
-	@Getter @Setter
+
+	private String id;
+	private Order order;
 	private String paymentNumberIdentifier;
-	
-	@Getter @Setter
 	private LocalDate dueDate;
-	
-	@Getter @Setter
 	private LocalDate paymentDate;
-	
+	private BigDecimal totalAmount;
+	private BigDecimal totalAmountPaid;
+	private final List<PaymentMethod> paymentMethods = new LinkedList<>();
+
+	public Integer addPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethods.add(paymentMethod);
+		return this.paymentMethods.size();
+	}
+
+
+	@NoArgsConstructor
+	@AllArgsConstructor
 	@Getter @Setter
-	private BigDecimal amount;
-	
-	@Getter @Setter
-	private BigDecimal discount;
-	
-	@Getter @Setter
-	private BigDecimal amountPaid;
-	
-	@Getter @Setter
-	private PaymentType paymentType; 
-	
-	@Getter @Setter
-	private PaymentStrategy paymentStrategy;
+	@ToString
+	@Builder(setterPrefix = "with")
+	public static class PaymentMethod {
+
+		private Payment payment;
+		private BigDecimal discount;
+		private BigDecimal totalAmountPaid;
+		private PaymentType paymentType;
+		private PaymentStrategy paymentStrategy;
+
+	}
 
 }

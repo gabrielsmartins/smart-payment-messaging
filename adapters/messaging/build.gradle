@@ -1,9 +1,9 @@
-apply plugin :  'io.spring.dependency-management'
-
 dependencies {
 
 	implementation project(':application')
 	implementation project(':common')
+
+	implementation 'org.springframework.boot:spring-boot-starter'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
@@ -18,7 +18,6 @@ dependencies {
 
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
 		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
 	}
 }

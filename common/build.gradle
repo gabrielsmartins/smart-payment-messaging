@@ -1,6 +1,4 @@
-group 'br.gabrielsmartins.smartpayment.messaging.common'
-
 dependencies {
-   implementation 'org.springframework:spring-context:5.2.4.RELEASE'
+   implementation 'org.springframework.boot:spring-boot-starter'
    implementation 'javax.validation:validation-api:2.0.1.Final'
 }

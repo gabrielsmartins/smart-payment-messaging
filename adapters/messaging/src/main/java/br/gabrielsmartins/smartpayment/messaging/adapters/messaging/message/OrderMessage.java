@@ -1,16 +1,18 @@
 package br.gabrielsmartins.smartpayment.messaging.adapters.messaging.message;
 
-import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
+@ToString(exclude = {"paymentMethods"})
 public class OrderMessage {
 
     @JsonProperty("id")
@@ -28,12 +30,23 @@ public class OrderMessage {
     @JsonProperty("total_amount")
     private BigDecimal totalAmount;
 
-    @JsonProperty("discount")
-    private BigDecimal discount;
+    @JsonProperty("payment_methods")
+    private final List<OrderPaymentMethodMessage> paymentMethods = new LinkedList<>();
 
-    @JsonProperty("total_amount_paid")
-    private BigDecimal totalAmountPaid;
 
-    @JsonProperty("payment_type")
-    private String paymentType;
+    @Getter
+    @Setter
+    @ToString
+    public static class OrderPaymentMethodMessage{
+
+        @JsonProperty("discount")
+        private BigDecimal discount;
+
+        @JsonProperty("total_amount_paid")
+        private BigDecimal totalAmountPaid;
+
+        @JsonProperty("payment_type")
+        private String paymentType;
+
+    }
 }

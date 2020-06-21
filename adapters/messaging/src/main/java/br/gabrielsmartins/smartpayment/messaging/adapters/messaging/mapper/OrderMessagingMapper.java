@@ -5,12 +5,12 @@ import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.Paymen
 import br.gabrielsmartins.smartpayment.messaging.application.domain.orders.Order;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMessagingMapper {
 
-    @Mapping(source = "paymentType", target = "paymentType", qualifiedByName = "toType")
     Order mapToDomain(OrderMessage orderMessage);
 
     default PaymentType toType(String paymentTypeDescription){
