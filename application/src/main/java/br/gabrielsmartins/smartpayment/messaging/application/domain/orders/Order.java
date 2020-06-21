@@ -4,39 +4,23 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @RequiredArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Order {
-	
-	@Getter
+
+	@Setter(AccessLevel.NONE)
 	private final String id;
-	
-	@Getter @Setter
 	private String paymentNumberIdentifier;
-	
-	@Getter @Setter
 	private LocalDate dueDate;
-	
-	@Getter @Setter
 	private LocalDate paymentDate;
-	
-	@Getter @Setter
-	private BigDecimal amount;
-	
-	@Getter @Setter
+	private BigDecimal totalAmount;
 	private BigDecimal discount;
-	
-	@Getter @Setter
-	private BigDecimal amountPaid;
-	
-	@Getter @Setter
-	private PaymentType paymentType; 
-	
-	
-	
+	private BigDecimal totalAmountPaid;
+	private PaymentType paymentType;
 
 }

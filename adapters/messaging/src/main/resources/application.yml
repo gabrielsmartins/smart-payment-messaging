@@ -1,0 +1,6 @@
+spring:
+    cloud:
+        stream:
+            bindings:
+                gather-in-0:
+                    content-type: text/plain

@@ -1,12 +1,27 @@
-group 'br.gabrielsmartins.smartpayment.adapters.persistence'
+apply plugin: 'io.spring.dependency-management'
 
-dependencies {
-   testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+ext {
+    hibernateOGMVersion = '5.4.1.Final'
+    narayanaJTAVersion = '5.10.5.Final'
 }
 
+dependencies {
+    implementation project(':application')
+    implementation project(':common')
+
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+
+    implementation group: 'org.hibernate.ogm', name: 'hibernate-ogm-mongodb', version: hibernateOGMVersion
+    implementation group: 'org.jboss.narayana.jta', name: 'narayana-jta', version: narayanaJTAVersion
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+
 dependencyManagement {
-	imports {
-		mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
-	}
- }
-   
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    }
+}
