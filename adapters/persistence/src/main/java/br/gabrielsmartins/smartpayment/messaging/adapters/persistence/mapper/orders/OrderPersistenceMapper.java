@@ -12,6 +12,7 @@ import org.mapstruct.ReportingPolicy;
         uses = {OrderPersistenceMapper.OrderPaymentMethodPersistenceMapper.class},
         unmappedSourcePolicy = ReportingPolicy.IGNORE,
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
+
 public interface OrderPersistenceMapper {
 
     OrderEntity mapToEntity(Order order);

@@ -29,7 +29,7 @@ public class OrderEntity {
     private BigDecimal totalAmount;
     private BigDecimal totalAmountPaid;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "order")
     private final List<OrderPaymentMethodEntity> paymentMethods = new LinkedList<>();
 
     public Integer addPaymentMethod(OrderPaymentMethodEntity paymentMethod) {
@@ -46,6 +46,7 @@ public class OrderEntity {
     @NoArgsConstructor
     public static class OrderPaymentMethodEntity{
 
+        @ManyToOne(targetEntity = OrderEntity.class)
         private OrderEntity order;
         private BigDecimal discount;
         private BigDecimal totalAmountPaid;

@@ -1,12 +1,15 @@
 package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 
+import javax.persistence.EntityManager;
+
+@RequiredArgsConstructor
 public class AbstractRepository<T> {
 
-    @PersistenceContext
-    protected EntityManager entityManager;
+    protected final EntityManager entityManager;
+
+
 
     public T save(T obj){
         entityManager.persist(obj);

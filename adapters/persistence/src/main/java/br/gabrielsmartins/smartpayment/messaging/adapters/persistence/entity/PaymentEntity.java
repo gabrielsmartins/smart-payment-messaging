@@ -3,6 +3,7 @@ package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.strategy.PaymentStrategy;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,6 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 public class PaymentEntity {
 
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @OneToOne
@@ -46,6 +50,7 @@ public class PaymentEntity {
     @NoArgsConstructor
     public static class PaymentMethodEntity{
 
+        @ManyToOne
         private PaymentEntity payment;
         private BigDecimal discount;
         private BigDecimal totalAmountPaid;
