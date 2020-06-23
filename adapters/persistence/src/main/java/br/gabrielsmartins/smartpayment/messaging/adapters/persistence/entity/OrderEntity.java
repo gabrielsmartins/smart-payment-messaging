@@ -46,11 +46,25 @@ public class OrderEntity {
     @NoArgsConstructor
     public static class OrderPaymentMethodEntity{
 
-        @ManyToOne(targetEntity = OrderEntity.class)
-        private OrderEntity order;
+        @EmbeddedId
+        private OrderPaymentMethodEntityId paymentMethodId;
         private BigDecimal discount;
         private BigDecimal totalAmountPaid;
         private PaymentType paymentType;
+
+        @Entity
+        @ToString
+        @Getter
+        @Setter
+        @Builder(setterPrefix = "with")
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @Embeddable
+        public static class OrderPaymentMethodEntityId{
+            private Long id;
+            @ManyToOne(targetEntity = OrderEntity.class)
+            private OrderEntity order;
+        }
 
     }
 

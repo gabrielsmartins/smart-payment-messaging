@@ -50,12 +50,25 @@ public class PaymentEntity {
     @NoArgsConstructor
     public static class PaymentMethodEntity{
 
-        @ManyToOne
-        private PaymentEntity payment;
+        private PaymentMethodEntityId paymentMethodId;
         private BigDecimal discount;
         private BigDecimal totalAmountPaid;
         private PaymentType paymentType;
         private PaymentStrategy paymentStrategy;
+
+        @Entity
+        @ToString
+        @Getter
+        @Setter
+        @Builder(setterPrefix = "with")
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @Embeddable
+        public static class PaymentMethodEntityId{
+            private Long id;
+            @ManyToOne
+            private PaymentEntity payment;
+        }
 
     }
 

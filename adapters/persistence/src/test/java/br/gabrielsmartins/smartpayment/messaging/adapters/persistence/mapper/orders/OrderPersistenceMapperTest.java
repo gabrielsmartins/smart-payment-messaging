@@ -31,20 +31,22 @@ public class OrderPersistenceMapperTest {
     @DisplayName("Given Order Entity When Map Then Return Order Domain")
     public void givenOrderEntityWhenMapThenReturnOrderDomain(){
 
-        OrderPaymentMethod paymentMethod = OrderPaymentMethod.builder()
-                .withDiscount(new BigDecimal(100.00))
-                .withTotalAmountPaid(new BigDecimal(1400.00))
-                .withPaymentType(PaymentType.CREDIT_CARD)
-                .build();
-
         Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withPaymentNumberIdentifier(UUID.randomUUID().toString())
-                .withDueDate(LocalDate.now())
-                .withPaymentDate(LocalDate.now())
-                .withTotalAmount(new BigDecimal(1500.00))
-                .withTotalAmountPaid(new BigDecimal(1400.00))
-                .build();
+                            .withId(UUID.randomUUID().toString())
+                            .withPaymentNumberIdentifier(UUID.randomUUID().toString())
+                            .withDueDate(LocalDate.now())
+                            .withPaymentDate(LocalDate.now())
+                            .withTotalAmount(new BigDecimal(1500.00))
+                            .withTotalAmountPaid(new BigDecimal(1400.00))
+                            .build();
+
+        OrderPaymentMethod paymentMethod = OrderPaymentMethod.builder()
+                                                                .withId(1L)
+                                                                .withOrder(order)
+                                                                .withDiscount(new BigDecimal(100.00))
+                                                                .withTotalAmountPaid(new BigDecimal(1400.00))
+                                                                .withPaymentType(PaymentType.CREDIT_CARD)
+                                                                .build();
 
         order.addPaymentMethod(paymentMethod);
 
@@ -63,11 +65,6 @@ public class OrderPersistenceMapperTest {
     @DisplayName("Given Order Domain When Map Then Return Order Entity")
     public void givenOrderDomainWhenMapThenReturnOrderEntity(){
 
-        OrderPaymentMethodEntity paymentMethod = OrderPaymentMethodEntity.builder()
-                                                                        .withDiscount(new BigDecimal(100.00))
-                                                                        .withTotalAmountPaid(new BigDecimal(1400.00))
-                                                                        .withPaymentType(PaymentType.CREDIT_CARD)
-                                                                        .build();
 
         OrderEntity orderEntity = OrderEntity.builder()
                                                 .withId(UUID.randomUUID().toString())
@@ -77,6 +74,13 @@ public class OrderPersistenceMapperTest {
                                                 .withTotalAmount(new BigDecimal(1500.00))
                                                 .withTotalAmountPaid(new BigDecimal(1400.00))
                                                 .build();
+
+        OrderPaymentMethodEntity paymentMethod = OrderPaymentMethodEntity.builder()
+                                                                           .withPaymentMethodId(new OrderPaymentMethodEntity.OrderPaymentMethodEntityId(1L, orderEntity))
+                                                                            .withDiscount(new BigDecimal(100.00))
+                                                                            .withTotalAmountPaid(new BigDecimal(1400.00))
+                                                                            .withPaymentType(PaymentType.CREDIT_CARD)
+                                                                            .build();
 
         orderEntity.addPaymentMethod(paymentMethod);
 

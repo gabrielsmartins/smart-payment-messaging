@@ -39,6 +39,7 @@ public class Payment {
 	@Builder(setterPrefix = "with")
 	public static class PaymentMethod {
 
+		private Long id;
 		private Payment payment;
 		private BigDecimal discount;
 		private BigDecimal totalAmountPaid;

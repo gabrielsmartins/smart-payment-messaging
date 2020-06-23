@@ -4,18 +4,18 @@ import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.Pay
 import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.PaymentEntity.PaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.Payment;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.Payment.PaymentMethod;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {PaymentPersistenceMapper.PaymentMethodPersistenceMapper.class},
         unmappedSourcePolicy = ReportingPolicy.IGNORE,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        builder = @Builder(disableBuilder = true))
 public interface PaymentPersistenceMapper {
 
     PaymentEntity mapToEntity(Payment payment);
 
+    @InheritInverseConfiguration
     Payment mapToDomain(PaymentEntity paymentEntity);
 
     @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
@@ -23,8 +23,10 @@ public interface PaymentPersistenceMapper {
             unmappedTargetPolicy = ReportingPolicy.IGNORE)
     interface PaymentMethodPersistenceMapper{
 
+        @Mapping(source = "id", target = "paymentMethodId.id")
         PaymentMethodEntity mapToEntity(PaymentMethod paymentMethod);
 
+        @InheritInverseConfiguration
         PaymentMethod mapToDomain(PaymentMethodEntity paymentMethodEntity);
 
     }

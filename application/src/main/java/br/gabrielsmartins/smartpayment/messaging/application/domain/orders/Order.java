@@ -38,6 +38,7 @@ public class Order {
 	@AllArgsConstructor
 	public static class OrderPaymentMethod {
 
+		private Long id;
 		private Order order;
 		private BigDecimal discount;
 		private BigDecimal totalAmountPaid;

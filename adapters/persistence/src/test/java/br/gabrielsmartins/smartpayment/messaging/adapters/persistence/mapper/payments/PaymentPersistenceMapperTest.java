@@ -34,12 +34,6 @@ public class PaymentPersistenceMapperTest {
     @DisplayName("Given Payment Entity When Map Then Return Payment Domain")
     public void givenPaymentEntityWhenMapThenReturnPaymentDomain(){
 
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                                    .withDiscount(new BigDecimal(100.00))
-                                    .withTotalAmountPaid(new BigDecimal(1400.00))
-                                    .withPaymentType(PaymentType.CREDIT_CARD)
-                                    .build();
-
         Payment payment = Payment.builder()
                                 .withOrder(new Order())
                                 .withPaymentNumberIdentifier(UUID.randomUUID().toString())
@@ -48,6 +42,14 @@ public class PaymentPersistenceMapperTest {
                                 .withTotalAmount(new BigDecimal(1500.00))
                                 .withTotalAmountPaid(new BigDecimal(1400.00))
                                 .build();
+
+        PaymentMethod paymentMethod = PaymentMethod.builder()
+                                                    .withId(1L)
+                                                    .withPayment(payment)
+                                                    .withDiscount(new BigDecimal(100.00))
+                                                    .withTotalAmountPaid(new BigDecimal(1400.00))
+                                                    .withPaymentType(PaymentType.CREDIT_CARD)
+                                                    .build();
 
         payment.addPaymentMethod(paymentMethod);
 
@@ -66,20 +68,21 @@ public class PaymentPersistenceMapperTest {
     @DisplayName("Given Payment Domain When Map Then Return Payment Entity")
     public void givenPaymentDomainWhenMapThenReturnPaymentEntity(){
 
-        PaymentMethodEntity paymentMethod = PaymentMethodEntity.builder()
-                                                .withDiscount(new BigDecimal(100.00))
-                                                .withTotalAmountPaid(new BigDecimal(1400.00))
-                                                .withPaymentType(PaymentType.CREDIT_CARD)
-                                                .build();
-
         PaymentEntity paymentEntity = PaymentEntity.builder()
-                                        .withOrder(new OrderEntity())
-                                        .withPaymentNumberIdentifier(UUID.randomUUID().toString())
-                                        .withDueDate(LocalDate.now())
-                                        .withPaymentDate(LocalDate.now())
-                                        .withTotalAmount(new BigDecimal(1500.00))
-                                        .withTotalAmountPaid(new BigDecimal(1400.00))
-                                        .build();
+                                                    .withOrder(new OrderEntity())
+                                                    .withPaymentNumberIdentifier(UUID.randomUUID().toString())
+                                                    .withDueDate(LocalDate.now())
+                                                    .withPaymentDate(LocalDate.now())
+                                                    .withTotalAmount(new BigDecimal(1500.00))
+                                                    .withTotalAmountPaid(new BigDecimal(1400.00))
+                                                    .build();
+
+        PaymentMethodEntity paymentMethod = PaymentMethodEntity.builder()
+                                                                .withPaymentMethodId(new PaymentMethodEntity.PaymentMethodEntityId(1L, paymentEntity))
+                                                                .withDiscount(new BigDecimal(100.00))
+                                                                .withTotalAmountPaid(new BigDecimal(1400.00))
+                                                                .withPaymentType(PaymentType.CREDIT_CARD)
+                                                                .build();
 
         paymentEntity.addPaymentMethod(paymentMethod);
 
