@@ -1,39 +1,43 @@
-package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity;
+package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.payments;
 
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.orders.OrderEntity;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.strategy.PaymentStrategy;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
-@Entity
+
 @ToString(exclude = {"paymentMethods"})
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
 @AllArgsConstructor
 @NoArgsConstructor
+@Document("payments")
 public class PaymentEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Field("payment_id")
     private String id;
-
-    @OneToOne
+    @Field("order_id")
     private OrderEntity order;
+    @Field("payment_number_identifier")
     private String paymentNumberIdentifier;
+    @Field("due_date")
     private LocalDate dueDate;
+    @Field("payment_date")
     private LocalDate paymentDate;
+    @Field("total_amount")
     private BigDecimal totalAmount;
+    @Field("total_amount_paid")
     private BigDecimal totalAmountPaid;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "payment")
+    @Field("payment_methods")
     private final List<PaymentMethodEntity> paymentMethods = new LinkedList<>();
 
     public Integer addPaymentMethod(PaymentMethodEntity paymentMethod) {
@@ -41,7 +45,6 @@ public class PaymentEntity {
         return this.paymentMethods.size();
     }
 
-    @Entity
     @ToString
     @Getter
     @Setter
@@ -50,26 +53,18 @@ public class PaymentEntity {
     @NoArgsConstructor
     public static class PaymentMethodEntity{
 
-        private PaymentMethodEntityId paymentMethodId;
+        @Field("payment_method_id")
+        private Long id;
+        @Field("payment_id")
+        private PaymentEntity payment;
+        @Field("discount")
         private BigDecimal discount;
+        @Field("total_amount_paid")
         private BigDecimal totalAmountPaid;
+        @Field("payment_type")
         private PaymentType paymentType;
-        private PaymentStrategy paymentStrategy;
-
-        @Entity
-        @ToString
-        @Getter
-        @Setter
-        @Builder(setterPrefix = "with")
-        @AllArgsConstructor
-        @NoArgsConstructor
-        @Embeddable
-        public static class PaymentMethodEntityId{
-            private Long id;
-            @ManyToOne
-            private PaymentEntity payment;
-        }
 
     }
+
 
 }

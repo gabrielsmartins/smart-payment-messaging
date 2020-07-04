@@ -1,8 +1,8 @@
-package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.service;
+package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.service.orders;
 
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.OrderEntity.OrderPaymentMethodEntity;
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.repository.OrderRepository;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.orders.OrderEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.orders.OrderEntity.OrderPaymentMethodEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.repository.orders.OrderRepository;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

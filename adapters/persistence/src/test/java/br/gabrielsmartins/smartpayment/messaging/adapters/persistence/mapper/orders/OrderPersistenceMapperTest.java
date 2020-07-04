@@ -1,7 +1,7 @@
 package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.mapper.orders;
 
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.OrderEntity.OrderPaymentMethodEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.orders.OrderEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.orders.OrderEntity.OrderPaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.orders.Order;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.orders.Order.OrderPaymentMethod;
@@ -42,7 +42,6 @@ public class OrderPersistenceMapperTest {
 
         OrderPaymentMethod paymentMethod = OrderPaymentMethod.builder()
                                                                 .withId(1L)
-                                                                .withOrder(order)
                                                                 .withDiscount(new BigDecimal(100.00))
                                                                 .withTotalAmountPaid(new BigDecimal(1400.00))
                                                                 .withPaymentType(PaymentType.CREDIT_CARD)
@@ -76,7 +75,8 @@ public class OrderPersistenceMapperTest {
                                                 .build();
 
         OrderPaymentMethodEntity paymentMethod = OrderPaymentMethodEntity.builder()
-                                                                           .withPaymentMethodId(new OrderPaymentMethodEntity.OrderPaymentMethodEntityId(1L, orderEntity))
+                                                                            .withId(1L)
+                                                                            .withOrder(orderEntity)
                                                                             .withDiscount(new BigDecimal(100.00))
                                                                             .withTotalAmountPaid(new BigDecimal(1400.00))
                                                                             .withPaymentType(PaymentType.CREDIT_CARD)

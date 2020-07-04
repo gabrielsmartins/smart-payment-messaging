@@ -1,7 +1,7 @@
 package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.mapper.payments;
 
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.PaymentEntity;
-import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.PaymentEntity.PaymentMethodEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.payments.PaymentEntity;
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.payments.PaymentEntity.PaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.Payment;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.Payment.PaymentMethod;
 import org.mapstruct.*;
@@ -23,7 +23,6 @@ public interface PaymentPersistenceMapper {
             unmappedTargetPolicy = ReportingPolicy.IGNORE)
     interface PaymentMethodPersistenceMapper{
 
-        @Mapping(source = "id", target = "paymentMethodId.id")
         PaymentMethodEntity mapToEntity(PaymentMethod paymentMethod);
 
         @InheritInverseConfiguration

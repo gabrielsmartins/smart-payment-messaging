@@ -1,5 +1,6 @@
 package br.gabrielsmartins.smartpayment.messaging.adapters.persistence.adapter.payments;
 
+import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.entity.payments.PaymentEntity;
 import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.mapper.payments.PaymentPersistenceMapper;
 import br.gabrielsmartins.smartpayment.messaging.adapters.persistence.service.payments.SavePaymentPersistenceService;
 import br.gabrielsmartins.smartpayment.messaging.application.domain.payments.Payment;
@@ -9,15 +10,15 @@ import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
-public class SavePaymentServiceAdapter implements SavePaymentPort {
+public class SavePaymentPersistenceAdapter implements SavePaymentPort {
 
     private final SavePaymentPersistenceService service;
     private final PaymentPersistenceMapper mapper;
 
-
     @Override
     public Payment save(Payment payment) {
-
-        return null;
+        PaymentEntity paymentEntity = mapper.mapToEntity(payment);
+        PaymentEntity savedPaymentEntity = service.save(paymentEntity);
+        return mapper.mapToDomain(savedPaymentEntity);
     }
 }
