@@ -1,1 +1,4 @@
-spring.data.mongodb.database=smartpaymentdb
+spring:
+    data:
+        mongodb:
+            database: smartpaymentdb
