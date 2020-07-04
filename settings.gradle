@@ -1,8 +1,9 @@
-rootProject.name = 'smart-payment-messaging'
+rootProject.name = 'smart-payment-orders'
 
 include ':application'
 include ':common'
-include ':adapters:persistence'
+include ':adapters:web'
 include ':adapters:messaging'
+include ':adapters:persistence'
 include ':configuration'
 

@@ -1,4 +1,10 @@
 dependencies {
+    implementation project(':common')
+    implementation project(':application')
+    implementation project(':adapters:persistence')
+    //implementation project(':adapters:messaging')
+    implementation project(':adapters:web')
+
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.boot:spring-boot-devtools'
