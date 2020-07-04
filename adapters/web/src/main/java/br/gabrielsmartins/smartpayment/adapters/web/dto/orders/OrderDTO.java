@@ -32,6 +32,8 @@ public class OrderDTO {
 
     @JsonProperty("total_amount_paid")
     private BigDecimal totalAmountPaid;
+
+    @JsonProperty("payment_methods")
     private final List<OrderPaymentMethodDTO> paymentMethods = new LinkedList<>();
 
     public Integer addPaymentMethod(OrderPaymentMethodDTO paymentMethod) {
