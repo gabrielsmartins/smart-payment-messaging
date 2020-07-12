@@ -2,13 +2,7 @@ dependencies {
     implementation project(':application')
     implementation project(':common')
 
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
-
     testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 }
 

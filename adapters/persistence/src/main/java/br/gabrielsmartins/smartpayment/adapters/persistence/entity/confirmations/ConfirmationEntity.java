@@ -1,6 +1,6 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.entity.confirmations;
 
-import br.gabrielsmartins.smartpayment.domain.enums.ConfirmationStatus;
+import br.gabrielsmartins.smartpayment.application.domain.enums.ConfirmationStatus;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

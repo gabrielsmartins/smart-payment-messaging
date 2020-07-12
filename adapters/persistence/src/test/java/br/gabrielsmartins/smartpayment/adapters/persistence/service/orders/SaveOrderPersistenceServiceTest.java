@@ -3,7 +3,7 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.service.orders;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity.OrderPaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.adapters.persistence.repository.orders.OrderRepository;
-import br.gabrielsmartins.smartpayment.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

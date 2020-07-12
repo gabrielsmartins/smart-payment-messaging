@@ -3,8 +3,8 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.adapter.orders;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
 import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.orders.OrderPersistenceMapper;
 import br.gabrielsmartins.smartpayment.adapters.persistence.service.orders.SaveOrderPersistenceService;
-import br.gabrielsmartins.smartpayment.domain.orders.Order;
-import br.gabrielsmartins.smartpayment.ports.out.orders.SaveOrderPort;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.application.ports.out.orders.SaveOrderPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 

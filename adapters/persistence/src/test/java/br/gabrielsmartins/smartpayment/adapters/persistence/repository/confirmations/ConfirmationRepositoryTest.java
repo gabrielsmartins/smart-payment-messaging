@@ -3,7 +3,7 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.repository.confirma
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.PersistenceAdapterTest;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.confirmations.ConfirmationEntity;
-import br.gabrielsmartins.smartpayment.domain.enums.ConfirmationStatus;
+import br.gabrielsmartins.smartpayment.application.domain.enums.ConfirmationStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

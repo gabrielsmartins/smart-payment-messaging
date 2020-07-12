@@ -2,7 +2,7 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.repository.orders;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.PersistenceAdapterTest;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
-import br.gabrielsmartins.smartpayment.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,9 +6,9 @@ import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.orders.OrderP
 import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.orders.OrderPersistenceMapper.OrderPaymentMethodPersistenceMapper;
 import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.orders.OrderPersistenceMapperImpl;
 import br.gabrielsmartins.smartpayment.adapters.persistence.service.orders.SaveOrderPersistenceService;
-import br.gabrielsmartins.smartpayment.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.domain.orders.Order;
-import br.gabrielsmartins.smartpayment.domain.orders.Order.OrderPaymentMethod;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order.OrderPaymentMethod;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

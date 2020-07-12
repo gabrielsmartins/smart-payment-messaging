@@ -4,8 +4,8 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.adapter.confirmatio
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.confirmations.ConfirmationEntity;
 import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.confirmations.ConfirmationPersistenceMapper;
 import br.gabrielsmartins.smartpayment.adapters.persistence.service.confirmations.SaveConfirmationPersistenceService;
-import br.gabrielsmartins.smartpayment.domain.confirmations.Confirmation;
-import br.gabrielsmartins.smartpayment.ports.out.confirmations.SaveConfirmationPort;
+import br.gabrielsmartins.smartpayment.application.domain.confirmations.Confirmation;
+import br.gabrielsmartins.smartpayment.application.ports.out.confirmations.SaveConfirmationPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 

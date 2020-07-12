@@ -1,6 +1,6 @@
 package br.gabrielsmartins.smartpayment.adapters.web.enums;
 
-import br.gabrielsmartins.smartpayment.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.stream.Stream;

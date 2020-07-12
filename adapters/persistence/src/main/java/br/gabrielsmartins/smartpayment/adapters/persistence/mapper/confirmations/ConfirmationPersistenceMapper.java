@@ -1,7 +1,7 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.mapper.confirmations;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.confirmations.ConfirmationEntity;
-import br.gabrielsmartins.smartpayment.domain.confirmations.Confirmation;
+import br.gabrielsmartins.smartpayment.application.domain.confirmations.Confirmation;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,

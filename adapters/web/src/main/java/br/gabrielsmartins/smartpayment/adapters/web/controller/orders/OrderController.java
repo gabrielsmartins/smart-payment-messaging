@@ -2,8 +2,8 @@ package br.gabrielsmartins.smartpayment.adapters.web.controller.orders;
 
 import br.gabrielsmartins.smartpayment.adapters.web.dto.orders.OrderDTO;
 import br.gabrielsmartins.smartpayment.adapters.web.mapper.orders.OrderWebMapper;
-import br.gabrielsmartins.smartpayment.domain.orders.Order;
-import br.gabrielsmartins.smartpayment.ports.in.orders.SaveOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.application.ports.in.orders.SaveOrderUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

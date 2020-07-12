@@ -1,6 +1,6 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders;
 
-import br.gabrielsmartins.smartpayment.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

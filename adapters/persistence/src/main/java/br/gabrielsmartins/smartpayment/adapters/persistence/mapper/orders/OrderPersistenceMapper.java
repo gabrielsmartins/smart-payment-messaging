@@ -1,8 +1,8 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.mapper.orders;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
-import br.gabrielsmartins.smartpayment.domain.orders.Order;
-import br.gabrielsmartins.smartpayment.domain.orders.Order.OrderPaymentMethod;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order.OrderPaymentMethod;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,

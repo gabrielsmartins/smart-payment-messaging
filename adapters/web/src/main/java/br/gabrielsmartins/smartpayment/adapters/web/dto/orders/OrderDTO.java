@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderDTO {
 
     @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)

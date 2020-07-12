@@ -1,7 +1,7 @@
 package br.gabrielsmartins.smartpayment.adapters.web.mapper.orders;
 
 import br.gabrielsmartins.smartpayment.adapters.web.dto.orders.OrderDTO;
-import br.gabrielsmartins.smartpayment.domain.orders.Order;
+import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
 import org.mapstruct.Builder;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
