@@ -1,4 +1,4 @@
-package br.gabrielsmartins.smartpayment.application.service.orders;
+package br.gabrielsmartins.smartpayment.application.service;
 
 import br.gabrielsmartins.smartpayment.application.ports.in.orders.SaveOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
