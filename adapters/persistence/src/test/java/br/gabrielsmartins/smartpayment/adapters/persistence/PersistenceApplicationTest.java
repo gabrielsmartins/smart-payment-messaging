@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = {OrderRepository.class, ConfirmationRepository.class})
-public class PersistenceAdapterTest {
+public class PersistenceApplicationTest {
 
     public static void main(String[] args) {
-        SpringApplication.run(PersistenceAdapterTest.class, args);
+        SpringApplication.run(PersistenceApplicationTest.class, args);
     }
 }

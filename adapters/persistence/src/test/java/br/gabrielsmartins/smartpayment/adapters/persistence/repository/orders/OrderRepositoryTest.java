@@ -1,6 +1,6 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.repository.orders;
 
-import br.gabrielsmartins.smartpayment.adapters.persistence.PersistenceAdapterTest;
+import br.gabrielsmartins.smartpayment.adapters.persistence.PersistenceApplicationTest;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {PersistenceAdapterTest.class})
+@SpringBootTest(classes = {PersistenceApplicationTest.class})
 @ActiveProfiles("test")
 public class OrderRepositoryTest {
 

@@ -1,9 +1,10 @@
-package br.gabrielsmartins.smartpayment.application.service;
+package br.gabrielsmartins.smartpayment.application.service.orders;
 
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
 import br.gabrielsmartins.smartpayment.application.domain.orders.Order.OrderPaymentMethod;
 import br.gabrielsmartins.smartpayment.application.ports.out.orders.SaveOrderPort;
+import br.gabrielsmartins.smartpayment.application.service.SaveOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
