@@ -1,13 +1,14 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.repository.orders;
 
-import br.gabrielsmartins.smartpayment.adapters.persistence.PersistenceApplicationTest;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.orders.OrderEntity;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +16,8 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(classes = {PersistenceApplicationTest.class})
+@ExtendWith(SpringExtension.class)
+@DataMongoTest
 @ActiveProfiles("test")
 public class OrderRepositoryTest {
 
