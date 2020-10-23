@@ -1,6 +1,9 @@
 package br.gabrielsmartins.smartpayment.application.domain.orders;
 
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.orders.state.NewState;
+import br.gabrielsmartins.smartpayment.application.domain.orders.state.OrderState;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -23,6 +26,8 @@ public class Order {
 	private LocalDate paymentDate;
 	private BigDecimal totalAmount;
 	private BigDecimal totalAmountPaid;
+	private OrderStatus status = OrderStatus.NEW;
+	private OrderState state = new NewState();
 	private final List<OrderPaymentMethod> paymentMethods = new LinkedList<>();
 
 	public Integer addPaymentMethod(OrderPaymentMethod paymentMethod) {

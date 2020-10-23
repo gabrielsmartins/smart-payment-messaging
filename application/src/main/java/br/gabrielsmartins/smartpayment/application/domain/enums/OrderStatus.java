@@ -5,14 +5,14 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ConfirmationStatus {
+public enum OrderStatus {
 
+    NEW("NEW"),
     RECEIVED("RECEIVED"),
     STARTED("STARTED"),
-    ACCEPTED("ACCEPTED"),
-    REJECTED("REJECTED");
+    REPLIED("REPLIED"),
+    FINISHED("FINISHED");
 
     private final String description;
-
 
 }
