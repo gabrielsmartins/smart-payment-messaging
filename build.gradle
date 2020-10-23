@@ -6,8 +6,8 @@ allprojects {
     targetCompatibility = '11'
 
     ext {
-        springBootVersion = '2.3.1.RELEASE'
-        springCloudVersion = 'Hoxton.SR6'
+        springBootVersion = '2.3.4.RELEASE'
+        springCloudVersion = 'Hoxton.SR8'
         lombokVersion = '1.18.12'
         junitVersion = '5.6.2'
         junitPlatformVersion = '1.6.2'
