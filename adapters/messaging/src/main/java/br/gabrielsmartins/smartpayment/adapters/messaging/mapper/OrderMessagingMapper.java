@@ -1,8 +1,9 @@
 package br.gabrielsmartins.smartpayment.adapters.messaging.mapper;
 
 import br.gabrielsmartins.smartpayment.adapters.messaging.message.OrderMessage;
+import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
+
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

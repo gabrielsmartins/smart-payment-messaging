@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 public enum OrderStatus {
 
     NEW("NEW"),
-    RECEIVED("RECEIVED"),
-    STARTED("STARTED"),
-    REPLIED("REPLIED"),
-    FINISHED("FINISHED");
+    REQUESTED("REQUESTED"),
+    VALIDATED("VALIDATED"),
+    CONFIRMED("CONFIRMED"),
+    COMPLETED("COMPLETED");
 
     private final String description;
 

@@ -3,6 +3,6 @@ dependencies {
 	implementation project(':application')
 	implementation project(':common')
 
-	implementation 'org.springframework.cloud:spring-cloud-stream'
-	testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support'
+	implementation 'org.springframework.kafka:spring-kafka'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
 }

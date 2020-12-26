@@ -1,8 +1,8 @@
 package br.gabrielsmartins.smartpayment.application.service;
 
-import br.gabrielsmartins.smartpayment.application.ports.in.orders.SaveOrderUseCase;
-import br.gabrielsmartins.smartpayment.application.domain.orders.Order;
-import br.gabrielsmartins.smartpayment.application.ports.out.orders.SaveOrderPort;
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.ports.out.SaveOrderPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.UseCase;
 import lombok.RequiredArgsConstructor;
 

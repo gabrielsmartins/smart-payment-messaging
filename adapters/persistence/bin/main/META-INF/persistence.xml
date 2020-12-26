@@ -1,8 +1,0 @@
-<persistence-unit name="smartpayment-PU" transaction-type="JTA">
-    <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
-    <properties>
-        <property name="hibernate.ogm.datastore.provider" value="MONGODB" />
-        <property name="hibernate.ogm.datastore.database" value="smartpaymentdb" />
-        <property name="hibernate.ogm.datastore.create_database" value="true" />
-    </properties>
-</persistence-unit>
