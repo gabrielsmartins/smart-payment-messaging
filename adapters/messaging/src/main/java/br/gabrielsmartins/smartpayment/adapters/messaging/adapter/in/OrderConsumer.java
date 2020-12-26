@@ -1,4 +1,4 @@
-package br.gabrielsmartins.smartpayment.adapters.messaging.adapter;
+package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in;
 
 import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.OrderMessagingMapper;
 import br.gabrielsmartins.smartpayment.adapters.messaging.message.OrderMessage;

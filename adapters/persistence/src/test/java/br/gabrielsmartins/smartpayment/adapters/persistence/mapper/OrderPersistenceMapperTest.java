@@ -1,20 +1,20 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity.OrderItemEntity;
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderPersistenceMapperTest {
 
@@ -30,18 +30,25 @@ public class OrderPersistenceMapperTest {
     public void givenOrderEntityWhenMapThenReturnOrderDomain(){
 
     	Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID().toString())
+                .withId(UUID.randomUUID())
+                .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(new BigDecimal(1500.00))
-                .withTotalDiscount(new BigDecimal(1400.00))
+                .withTotalAmount(BigDecimal.valueOf(1500.00))
+                .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
     	order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-    	order.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
-    	order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+    	order.addItem(item);
+
+        order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
         OrderEntity orderEntity = this.mapper.mapToEntity(order);
 
@@ -64,17 +71,25 @@ public class OrderPersistenceMapperTest {
 
 
     	OrderEntity orderEntity = OrderEntity.builder()
-						                .withId(UUID.randomUUID().toString())
-						                .withCustomerId(UUID.randomUUID().toString())
+						                .withId(UUID.randomUUID())
+						                .withCustomerId(UUID.randomUUID())
 						                .withCreatedAt(LocalDateTime.now())
 						                .withFinishedAt(LocalDateTime.now())
 						                .withStatus(OrderStatus.COMPLETED)
-						                .withTotalAmount(new BigDecimal(1500.00))
-						                .withTotalDiscount(new BigDecimal(1400.00))
+						                .withTotalAmount(BigDecimal.valueOf(1500.00))
+						                .withTotalDiscount(BigDecimal.valueOf(1400.00))
 						                .build();
 
     	orderEntity.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-    	orderEntity.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
+
+        OrderItemEntity item = new OrderItemEntity();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+        orderEntity.addItem(item);
+
+
     	orderEntity.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
 

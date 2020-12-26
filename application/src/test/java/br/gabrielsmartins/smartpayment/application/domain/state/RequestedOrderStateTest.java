@@ -1,13 +1,12 @@
 package br.gabrielsmartins.smartpayment.application.domain.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RequestedOrderStateTest {
 	
@@ -23,8 +22,8 @@ public class RequestedOrderStateTest {
 	@Test
 	@DisplayName("Given State When Next Method Is Called Then Return Validated State")
 	public void givenStateWhenNextMethodIsCalledThenReturnValidatedState() {
-		OrderState completedState = this.state.next(order);
-		assertThat(completedState).isInstanceOf(ValidatedOrderState.class);
+		OrderState validatedState = this.state.next(order);
+		assertThat(validatedState).isInstanceOf(ValidatedOrderState.class);
 	}
 	
 	@Test

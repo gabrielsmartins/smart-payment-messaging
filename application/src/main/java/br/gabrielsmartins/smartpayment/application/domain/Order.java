@@ -1,20 +1,14 @@
 package br.gabrielsmartins.smartpayment.application.domain;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.NewOrderState;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
 
 
 @Getter
@@ -25,8 +19,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Order {
 
-	private String id;
-	private String customerId;
+	private UUID id;
+	private UUID customerId;
 	private LocalDateTime createdAt;
 	private LocalDateTime finishedAt;
 	private BigDecimal totalAmount;
@@ -39,7 +33,7 @@ public class Order {
 	private OrderState state = new NewOrderState();
 		
 	private final Map<LocalDateTime, OrderStatus> logs = new LinkedHashMap<>();
-	private final Map<String, BigDecimal> items = new LinkedHashMap<>();
+	private final List<OrderItem> items = new LinkedList<>();
 	private final Map<PaymentType, BigDecimal> paymentMethods = new LinkedHashMap<>();
 
 	public Integer addLog(LocalDateTime datetime, OrderStatus status) {
@@ -47,8 +41,9 @@ public class Order {
 		return this.logs.size();
 	}
 	
-	public Integer addItem(String productId, BigDecimal amount) {
-		this.items.put(productId, amount);
+	public Integer addItem(OrderItem item) {
+		item.setOrder(this);
+		this.items.add(item);
 		return this.items.size();
 	}
 	
@@ -62,6 +57,22 @@ public class Order {
 		 this.status = state.getStatus();
 		 return this.state;
 	}
+
+	@Getter
+	@Setter
+	@ToString
+	@Builder(setterPrefix = "with")
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class OrderItem {
+
+		private Order order;
+		private UUID productId;
+		private Integer quantity;
+		private BigDecimal amount;
+
+	}
+
 	
 
 

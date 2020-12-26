@@ -1,15 +1,14 @@
 package br.gabrielsmartins.smartpayment.adapters.web.adapters.in;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.SubmitOrderController;
+import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderDTO;
+import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper;
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,16 +18,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
-import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.SubmitOrderController;
-import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderDTO;
-import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper;
-import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(SubmitOrderController.class)
 public class SubmitOrderControllerTest {
@@ -55,11 +52,13 @@ public class SubmitOrderControllerTest {
     public void givenOrderWhenAcceptThenReturnSavedOrder() throws Exception {
 
         OrderDTO orderDTO = OrderDTO.builder()
-                                    .dueDate(LocalDate.now())
-                                    .paymentDate(LocalDate.now())
-                                    .totalAmount(new BigDecimal(1500))
-                                    .totalAmountPaid(new BigDecimal(1500))
-                                    .paymentNumberIdentifier(UUID.randomUUID().toString())
+                                    .withId(UUID.randomUUID().toString())
+                                    .withCustomerId(UUID.randomUUID().toString())
+                                    .withCreatedAt(LocalDateTime.now())
+                                    .withFinishedAt(LocalDateTime.now())
+                                    .withStatus(OrderStatus.COMPLETED.getDescription())
+                                    .withTotalAmount(BigDecimal.valueOf(1500.00))
+                                    .withTotalDiscount(BigDecimal.valueOf(1400.00))
                                     .build();
 
         String content = this.mapper.writeValueAsString(orderDTO);
@@ -71,8 +70,8 @@ public class SubmitOrderControllerTest {
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(new BigDecimal(1500.00))
-                .withTotalDiscount(new BigDecimal(1400.00))
+                .withTotalAmount(BigDecimal.valueOf(1500.00))
+                .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
     	order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);

@@ -1,8 +1,17 @@
+apply plugin: "com.commercehub.gradle.plugin.avro"
+
 dependencies {
 
 	implementation project(':application')
 	implementation project(':common')
 
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation group: 'org.apache.avro', name: 'avro', version: avroVersion
+
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+
+avro{
+	outputCharacterEncoding = "UTF-8"
 }

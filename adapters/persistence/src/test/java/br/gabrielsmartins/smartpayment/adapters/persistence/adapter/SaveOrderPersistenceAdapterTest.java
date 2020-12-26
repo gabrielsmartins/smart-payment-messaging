@@ -39,13 +39,13 @@ public class SaveOrderPersistenceAdapterTest {
     public void givenOrderWhenSaveThenReturnSavedOrder(){
 
         Order order = Order.builder()
-                            .withId(UUID.randomUUID().toString())
-                            .withCustomerId(UUID.randomUUID().toString())
+                            .withId(UUID.randomUUID())
+                            .withCustomerId(UUID.randomUUID())
                             .withCreatedAt(LocalDateTime.now())
                             .withFinishedAt(LocalDateTime.now())
                             .withStatus(OrderStatus.COMPLETED)
-                            .withTotalAmount(new BigDecimal(1500.00))
-                            .withTotalDiscount(new BigDecimal(1400.00))
+                            .withTotalAmount(BigDecimal.valueOf(1500.00))
+                            .withTotalDiscount(BigDecimal.valueOf(1400.00))
                             .build();
 
 

@@ -1,17 +1,17 @@
 package br.gabrielsmartins.smartpayment.application.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderTest {
 	
@@ -29,7 +29,13 @@ public class OrderTest {
 	@DisplayName("Given Order When Add Item Then Return Items Size")
 	public void givenOrderWhenAddItemThenReturnItemsSize() {
 		Order order = new Order();
-		Integer itemsSize = order.addItem(UUID.randomUUID().toString(), BigDecimal.TEN);
+
+		OrderItem item = new OrderItem();
+		item.setProductId(UUID.randomUUID());
+		item.setQuantity(10);
+		item.setAmount(BigDecimal.TEN);
+
+		Integer itemsSize = order.addItem(item);
 		assertThat(itemsSize).isEqualTo(1);
 		assertThat(order.getItems().size()).isEqualTo(1);
 	}
@@ -38,7 +44,13 @@ public class OrderTest {
 	@DisplayName("Given Order When Add Payment Method Then Return Items Size")
 	public void givenOrderWhenAddPaymentMethodThenReturnItemsSize() {
 		Order order = new Order();
-		Integer paymentMethosSize = order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+
+		OrderItem item = new OrderItem();
+		item.setProductId(UUID.randomUUID());
+		item.setQuantity(10);
+		item.setAmount(BigDecimal.TEN);
+
+		Integer paymentMethosSize = order.addPaymentMethod(PaymentType.CASH, BigDecimal.TEN);
 		assertThat(paymentMethosSize).isEqualTo(1);
 		assertThat(order.getPaymentMethods().size()).isEqualTo(1);
 	}

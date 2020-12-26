@@ -10,6 +10,7 @@ public enum OrderStatus {
     NEW("NEW"),
     REQUESTED("REQUESTED"),
     VALIDATED("VALIDATED"),
+    REJECTED("REJECTED"),
     CONFIRMED("CONFIRMED"),
     COMPLETED("COMPLETED");
 
