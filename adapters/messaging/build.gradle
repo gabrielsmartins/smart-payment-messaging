@@ -13,5 +13,6 @@ dependencies {
 
 
 avro{
+	//enableDecimalLogicalType = true
 	outputCharacterEncoding = "UTF-8"
 }

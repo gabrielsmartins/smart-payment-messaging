@@ -1,0 +1,43 @@
+{
+   "type":"record",
+   "name":"OrderValidated",
+   "namespace":"br.gabrielsmartins.schemas",
+   "fields":[
+      {
+         "name":"id",
+         "type": {
+            "type": "string",
+            "logicalType": "uuid"
+          }
+      },
+      {
+         "name":"customer_id",
+         "type": {
+           "type": "string",
+           "logicalType": "uuid"
+         }
+      },
+      {
+          "name":"created_at",
+          "type": {
+            "type": "int",
+            "logicalType": "timestamp-millis"
+          }
+      },
+      {
+         "name":"total_amount",
+         "type": {
+             "type": "bytes",
+             "logicalType": "decimal"
+          }
+      },
+      {
+         "name":"total_discount",
+         "type": ["null", {
+            "type": "bytes",
+            "logicalType": "decimal"
+          }],
+         "default": "null"
+      }
+   ]
+}
