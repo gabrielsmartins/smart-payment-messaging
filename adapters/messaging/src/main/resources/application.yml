@@ -19,4 +19,4 @@ spring:
       order-requested: order-requested
       order-validated: order-validated
     output:
-      order-statusupdated: order-updated
+      order-status-updated: order-status-updated
