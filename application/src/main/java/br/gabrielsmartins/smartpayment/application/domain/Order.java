@@ -13,7 +13,7 @@ import java.util.*;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"logs", "items", "paymentMethods"})
 @Builder(setterPrefix = "with")
 @NoArgsConstructor
 @AllArgsConstructor

@@ -1,3 +1,14 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        jcenter()
+        maven {
+            name "JCenter Gradle Plugins"
+            url  "https://dl.bintray.com/gradle/gradle-plugins"
+        }
+    }
+}
+
 rootProject.name = 'smartpayment-orders'
 
 include ':application'
@@ -6,4 +17,6 @@ include ':adapters:web'
 include ':adapters:messaging'
 include ':adapters:persistence'
 include ':configuration'
+
+
 

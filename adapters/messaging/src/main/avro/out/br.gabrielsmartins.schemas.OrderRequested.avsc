@@ -1,7 +1,7 @@
 {
    "type":"record",
    "name":"OrderRequested",
-   "namespace":"br.gabrielsmartins.schemas",
+   "namespace":"br.gabrielsmartins.schemas.order_requested",
    "fields":[
       {
          "name":"id",
@@ -20,24 +20,27 @@
       {
           "name":"created_at",
           "type": {
-            "type": "int",
-            "logicalType": "timestamp-millis"
+            "type": "long",
+            "logicalType": "local-timestamp-millis"
           }
       },
       {
          "name":"total_amount",
          "type": {
              "type": "bytes",
-             "logicalType": "decimal"
+             "logicalType": "decimal",
+             "precision": 2,
+             "scale": 0
           }
       },
       {
          "name":"total_discount",
-         "type": ["null", {
-             "type": "bytes",
-             "logicalType": "decimal"
-          }],
-          "default": "null"
+         "type": {
+                      "type": "bytes",
+                      "logicalType": "decimal",
+                      "precision": 2,
+                      "scale": 0
+         }
       },
       {
           "name":"items",
@@ -49,7 +52,7 @@
                "fields": [
                   { "name": "product_id", "type": {"type": "string", "logicalType": "uuid"} },
                   { "name": "quantity", "type": "int" },
-                  { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal"} }
+                  { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 2, "scale": 0 } }
                ]
              }
           }
@@ -62,8 +65,8 @@
              "name": "PaymentMethod",
              "type": "record",
              "fields": [
-                { "name": "payment_type", "type" : "string" },
-                { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal"} }
+                { "name": "payment_type", "type": { "type": "enum", "name": "PaymentType", "symbols": ["CREDIT_CARD", "CASH", "INTERNET_BANKING", "PAYPAL"] }},
+                { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 2, "scale": 0 } }
              ]
            }
         }

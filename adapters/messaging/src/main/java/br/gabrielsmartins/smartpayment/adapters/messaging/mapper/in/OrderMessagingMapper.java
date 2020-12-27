@@ -1,19 +1,39 @@
 package br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in;
 
-import br.gabrielsmartins.schemas.NewOrder;
+import br.gabrielsmartins.schemas.new_order.NewOrder;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OrderMessagingMapper {
+import java.math.BigDecimal;
+import java.util.UUID;
 
-    Order mapToDomain(NewOrder orderMessage);
+@Component
+@RequiredArgsConstructor
+public class OrderMessagingMapper {
 
-    default PaymentType toType(String paymentTypeDescription){
+    private final OrderItemMessagingMapper orderItemMapper;
+
+    public Order mapToDomain(NewOrder orderMessage){
+        Order order = new Order();
+        order.setCustomerId(UUID.fromString(orderMessage.getCustomerId()));
+        order.setCreatedAt(orderMessage.getCreatedAt());
+        order.setTotalAmount(orderMessage.getTotalAmount());
+        order.setTotalDiscount(orderMessage.getTotalDiscount());
+        orderMessage.getItems().stream()
+                               .map(orderItemMapper::mapToDomain)
+                               .forEach(order::addItem);
+        orderMessage.getPaymentMethods()
+                    .forEach(pm -> {
+                        PaymentType paymentType = PaymentType.valueOf(pm.getPaymentType().name());
+                        BigDecimal amount = pm.getAmount();
+                        order.addPaymentMethod(paymentType, amount);
+                    });
+        return order;
+    }
+
+    private PaymentType toPaymentType(String paymentTypeDescription){
         return PaymentType.fromDescription(paymentTypeDescription);
     }
 

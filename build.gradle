@@ -12,7 +12,6 @@ compileJava.options.encoding = 'UTF-8'
  buildscript {
     ext{
         springBootDependencyManagementPluginVersion = '1.0.9.RELEASE'
-        avroPluginVersion = '0.9.1'
     }
     repositories {
         mavenCentral()
@@ -21,7 +20,6 @@ compileJava.options.encoding = 'UTF-8'
         }
     }
     dependencies {
-        classpath group: 'com.commercehub.gradle.plugin.avro', name: 'com.commercehub.gradle.plugin.avro.gradle.plugin', version: avroPluginVersion
         classpath group: 'io.spring.gradle', name: 'dependency-management-plugin', version: springBootDependencyManagementPluginVersion
     }
 }

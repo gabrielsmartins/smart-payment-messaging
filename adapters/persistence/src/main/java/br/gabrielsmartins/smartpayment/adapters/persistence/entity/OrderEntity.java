@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-@ToString
+@ToString(exclude = {"logs", "items", "paymentMethods"})
 @Getter
 @Setter
 @Builder(setterPrefix = "with")

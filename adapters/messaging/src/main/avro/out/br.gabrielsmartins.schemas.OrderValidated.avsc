@@ -1,7 +1,7 @@
 {
    "type":"record",
    "name":"OrderValidated",
-   "namespace":"br.gabrielsmartins.schemas",
+   "namespace":"br.gabrielsmartins.schemas.order_validated",
    "fields":[
       {
          "name":"id",
@@ -20,24 +20,27 @@
       {
           "name":"created_at",
           "type": {
-            "type": "int",
-            "logicalType": "timestamp-millis"
+            "type": "long",
+            "logicalType": "local-timestamp-millis"
           }
       },
       {
          "name":"total_amount",
          "type": {
              "type": "bytes",
-             "logicalType": "decimal"
+             "logicalType": "decimal",
+             "precision": 2,
+             "scale": 0
           }
       },
       {
          "name":"total_discount",
-         "type": ["null", {
-            "type": "bytes",
-            "logicalType": "decimal"
-          }],
-         "default": "null"
+         "type": {
+                      "type": "bytes",
+                      "logicalType": "decimal",
+                      "precision": 2,
+                      "scale": 0
+         }
       }
    ]
 }

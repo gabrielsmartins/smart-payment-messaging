@@ -2,14 +2,11 @@ package br.gabrielsmartins.smartpayment.adapters.messaging.mapper.out;
 
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import org.apache.avro.specific.SpecificRecord;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OrderStatusMapper {
+@Component
+public interface OrderStatusMapper<T extends SpecificRecord> {
 
-    SpecificRecord mapToMessage(Order order);
+    T mapToMessage(Order order);
 
 }
