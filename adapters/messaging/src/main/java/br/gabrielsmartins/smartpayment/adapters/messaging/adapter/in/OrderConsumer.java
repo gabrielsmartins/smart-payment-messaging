@@ -16,7 +16,7 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 
 @MessagingAdapter
-@KafkaListener(topics = {"${topics.input.order-requested}"})
+@KafkaListener(topics = {"${topic.input.order-requested}"})
 @Slf4j
 @RequiredArgsConstructor
 public class OrderConsumer {

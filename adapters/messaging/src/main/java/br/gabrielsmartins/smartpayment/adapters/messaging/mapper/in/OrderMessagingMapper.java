@@ -33,9 +33,4 @@ public class OrderMessagingMapper {
         return order;
     }
 
-    private PaymentType toPaymentType(String paymentTypeDescription){
-        return PaymentType.fromDescription(paymentTypeDescription);
-    }
-
-
 }

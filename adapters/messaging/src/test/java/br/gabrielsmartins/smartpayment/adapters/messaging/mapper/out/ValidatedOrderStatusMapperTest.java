@@ -59,4 +59,11 @@ public class ValidatedOrderStatusMapperTest {
         assertThat(message.getTotalDiscount()).isEqualTo(order.getTotalDiscount());
     }
 
+    @Test
+    @DisplayName("Given Mapper When Get Order Status Then Return Order Status Validated")
+    public void givenMapperWhenGetOrderStatusThenReturnOrderStatusValidatedd(){
+        OrderStatus orderStatus = this.mapper.getOrderStatus();
+        assertThat(orderStatus).isEqualTo(OrderStatus.VALIDATED);
+    }
+
 }

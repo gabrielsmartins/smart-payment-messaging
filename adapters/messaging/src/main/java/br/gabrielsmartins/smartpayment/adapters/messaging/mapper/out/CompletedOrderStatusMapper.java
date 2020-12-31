@@ -6,6 +6,7 @@ import br.gabrielsmartins.schemas.order_completed.OrderCompleted;
 import br.gabrielsmartins.schemas.order_completed.PaymentMethod;
 import br.gabrielsmartins.schemas.order_completed.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -42,5 +43,10 @@ public class CompletedOrderStatusMapper implements OrderStatusMapper<OrderComple
                 .setPaymentMethods(paymentMethods)
                 .setFinishedAt(order.getFinishedAt())
                 .build();
+    }
+
+    @Override
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.COMPLETED;
     }
 }

@@ -2,7 +2,9 @@ package br.gabrielsmartins.smartpayment.adapters.messaging.mapper.out;
 
 import br.gabrielsmartins.schemas.order_requested.Item;
 import br.gabrielsmartins.smartpayment.application.domain.Order.*;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RequestedOrderItemStatusMapper {
 
     public Item mapToMessage(OrderItem orderItem) {

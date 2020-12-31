@@ -6,6 +6,7 @@ import br.gabrielsmartins.schemas.order_requested.OrderRequested;
 import br.gabrielsmartins.schemas.order_requested.PaymentMethod;
 import br.gabrielsmartins.schemas.order_requested.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -41,5 +42,10 @@ public class RequestedOrderStatusMapper implements OrderStatusMapper<OrderReques
                 .setItems(items)
                 .setPaymentMethods(paymentMethods)
                 .build();
+    }
+
+    @Override
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.REQUESTED;
     }
 }

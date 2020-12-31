@@ -62,4 +62,11 @@ public class RequestedOrderStatusMapperTest {
         assertThat(message.getPaymentMethods().size()).isEqualTo(order.getPaymentMethods().size());
     }
 
+
+    @Test
+    @DisplayName("Given Mapper When Get Order Status Then Return Order Status Requested")
+    public void givenMapperWhenGetOrderStatusThenReturnOrderStatusRequested(){
+        OrderStatus orderStatus = this.mapper.getOrderStatus();
+        assertThat(orderStatus).isEqualTo(OrderStatus.REQUESTED);
+    }
 }

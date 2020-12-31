@@ -63,4 +63,11 @@ public class RejectedOrderStatusMapperTest {
         assertThat(message.getPaymentMethods().size()).isEqualTo(order.getPaymentMethods().size());
     }
 
+    @Test
+    @DisplayName("Given Mapper When Get Order Status Then Return Order Status Rejected")
+    public void givenMapperWhenGetOrderStatusThenReturnOrderStatusRejected(){
+        OrderStatus orderStatus = this.mapper.getOrderStatus();
+        assertThat(orderStatus).isEqualTo(OrderStatus.REJECTED);
+    }
+
 }

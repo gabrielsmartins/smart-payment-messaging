@@ -29,17 +29,17 @@
          "type": {
              "type": "bytes",
              "logicalType": "decimal",
-             "precision": 2,
-             "scale": 0
+             "precision": 9,
+             "scale": 2
           }
       },
       {
          "name":"total_discount",
          "type": {
-                      "type": "bytes",
-                      "logicalType": "decimal",
-                      "precision": 2,
-                      "scale": 0
+              "type": "bytes",
+              "logicalType": "decimal",
+              "precision": 9,
+              "scale": 2
          }
       },
       {
@@ -52,7 +52,7 @@
                "fields": [
                   { "name": "product_id", "type": {"type": "string", "logicalType": "uuid"} },
                   { "name": "quantity", "type": "int" },
-                  { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 2, "scale": 0 } }
+                  { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 9, "scale": 2 } }
                ]
              }
           }
@@ -66,7 +66,7 @@
              "type": "record",
              "fields": [
                 { "name": "payment_type", "type": { "type": "enum", "name": "PaymentType", "symbols": ["CREDIT_CARD", "CASH", "INTERNET_BANKING", "PAYPAL"] }},
-                { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 2, "scale": 0 } }
+                { "name": "amount", "type": {"type": "bytes", "logicalType": "decimal", "precision": 9,  "scale": 2 } }
              ]
            }
         }

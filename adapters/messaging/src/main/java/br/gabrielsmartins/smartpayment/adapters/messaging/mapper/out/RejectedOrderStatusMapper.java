@@ -6,6 +6,7 @@ import br.gabrielsmartins.schemas.order_rejected.PaymentMethod;
 import br.gabrielsmartins.schemas.order_rejected.PaymentType;
 import br.gabrielsmartins.schemas.order_rejected.OrderRejected;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -42,5 +43,10 @@ public class RejectedOrderStatusMapper implements OrderStatusMapper<OrderRejecte
                 .setPaymentMethods(paymentMethods)
                 .setFinishedAt(order.getFinishedAt())
                 .build();
+    }
+
+    @Override
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.REJECTED;
     }
 }

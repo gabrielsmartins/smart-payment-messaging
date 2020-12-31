@@ -59,4 +59,10 @@ public class ConfirmedOrderStatusMapperTest {
         assertThat(message.getTotalDiscount()).isEqualTo(order.getTotalDiscount());
     }
 
+    @Test
+    @DisplayName("Given Mapper When Get Order Status Then Return Order Status Confirmed")
+    public void givenMapperWhenGetOrderStatusThenReturnOrderStatusConfirmed(){
+        OrderStatus orderStatus = this.mapper.getOrderStatus();
+        assertThat(orderStatus).isEqualTo(OrderStatus.CONFIRMED);
+    }
 }

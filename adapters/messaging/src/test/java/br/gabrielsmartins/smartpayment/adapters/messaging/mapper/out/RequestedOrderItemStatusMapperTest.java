@@ -2,6 +2,7 @@ package br.gabrielsmartins.smartpayment.adapters.messaging.mapper.out;
 
 import br.gabrielsmartins.schemas.order_requested.Item;
 import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,4 +37,6 @@ public class RequestedOrderItemStatusMapperTest {
         assertThat(item.getQuantity()).isEqualTo(orderItem.getQuantity());
         assertThat(item.getAmount()).isEqualTo(orderItem.getAmount());
     }
+
+
 }
