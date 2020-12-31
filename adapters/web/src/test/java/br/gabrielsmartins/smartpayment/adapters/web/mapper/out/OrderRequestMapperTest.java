@@ -2,6 +2,7 @@ package br.gabrielsmartins.smartpayment.adapters.web.mapper.out;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.out.dto.OrderRequestDTO;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +27,10 @@ public class OrderRequestMapperTest {
     @Test
     @DisplayName("given Order When Map Then Return Request Dto")
     public void givenOrderWhenMapThenReturnRequestDto(){
+
         Order order = Order.builder()
                 .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID().toString())
+                .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
@@ -37,7 +39,14 @@ public class OrderRequestMapperTest {
                 .build();
 
         order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-        order.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
+
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+        order.addItem(item);
+
         order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
         OrderRequestDTO orderRequestDTO = this.mapper.mapToDto(order);

@@ -30,7 +30,7 @@ public class RequestedOrderStatusMapperTest {
     public void givenOrderWhenMapThenReturnMessage(){
 
         Order order = Order.builder()
-                .withId(UUID.randomUUID())
+                .withId(UUID.randomUUID().toString())
                 .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())

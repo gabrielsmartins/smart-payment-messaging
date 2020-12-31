@@ -2,8 +2,10 @@ package br.gabrielsmartins.smartpayment.adapters.web.adapters.in;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.SubmitOrderController;
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderDTO;
-import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper;
+import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper$OrderItemWebMapperImpl;
+import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapperImpl;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
@@ -39,7 +41,10 @@ public class SubmitOrderControllerTest {
     private SaveOrderUseCase saveOrderUseCase;
 
     @SpyBean
-    private OrderWebMapper orderWebMapper;
+    private OrderWebMapperImpl orderWebMapper;
+
+    @SpyBean
+    private OrderWebMapper$OrderItemWebMapperImpl orderItemWebMapper;
 
     @BeforeEach
     public void setup(){
@@ -53,7 +58,7 @@ public class SubmitOrderControllerTest {
 
         OrderDTO orderDTO = OrderDTO.builder()
                                     .withId(UUID.randomUUID().toString())
-                                    .withCustomerId(UUID.randomUUID().toString())
+                                    .withCustomerId(UUID.randomUUID())
                                     .withCreatedAt(LocalDateTime.now())
                                     .withFinishedAt(LocalDateTime.now())
                                     .withStatus(OrderStatus.COMPLETED.getDescription())
@@ -66,7 +71,7 @@ public class SubmitOrderControllerTest {
 
         Order order = Order.builder()
                 .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID().toString())
+                .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
@@ -74,10 +79,16 @@ public class SubmitOrderControllerTest {
                 .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
-    	order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-    	order.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
-    	order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+        order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
 
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+        order.addItem(item);
+
+        order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
         when(saveOrderUseCase.save(any(Order.class))).thenReturn(order);
 

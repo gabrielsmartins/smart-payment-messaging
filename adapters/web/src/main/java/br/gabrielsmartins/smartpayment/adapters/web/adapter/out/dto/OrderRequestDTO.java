@@ -17,7 +17,7 @@ import java.util.*;
 public class OrderRequestDTO {
 
     @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
-    private UUID id;
+    private String id;
 
     @JsonProperty("cusomter_id")
     private UUID customerId;

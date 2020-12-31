@@ -25,7 +25,7 @@ public class OrderEntity {
 
     @Id
     @Field("order_id")
-    private UUID id;
+    private String id;
 
     @Field("customer_id")
     private UUID customerId;
@@ -49,13 +49,28 @@ public class OrderEntity {
 	private OrderState state;
 
     @Field("logs")
-    private final Map<LocalDateTime, OrderStatus> logs = new LinkedHashMap<>();
+    @Getter(AccessLevel.NONE)
+    private final Map<LocalDateTime, OrderStatus> logs = new HashMap<>();
     
     @Field("items")
+    @Getter(AccessLevel.NONE)
 	private final List<OrderItemEntity> items = new LinkedList<>();
 	
     @Field("payment_methods")
-	private final Map<PaymentType, BigDecimal> paymentMethods = new LinkedHashMap<>();
+    @Getter(AccessLevel.NONE)
+	private final Map<PaymentType, BigDecimal> paymentMethods = new HashMap<>();
+
+    public Map<LocalDateTime, OrderStatus> getLogs() {
+        return Collections.unmodifiableMap(logs);
+    }
+
+    public List<OrderItemEntity> getItems() {
+        return Collections.unmodifiableList(items);
+    }
+
+    public Map<PaymentType, BigDecimal> getPaymentMethods() {
+        return Collections.unmodifiableMap(paymentMethods);
+    }
 
 	public Integer addLog(LocalDateTime datetime, OrderStatus status) {
 		this.logs.put(datetime, status);
@@ -75,7 +90,7 @@ public class OrderEntity {
 
     @Getter
     @Setter
-    @ToString
+    @ToString(exclude = {"order"})
     @Builder(setterPrefix = "with")
     @NoArgsConstructor
     @AllArgsConstructor

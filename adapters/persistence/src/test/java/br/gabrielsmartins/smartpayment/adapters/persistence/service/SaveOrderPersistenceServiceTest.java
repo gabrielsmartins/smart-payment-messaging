@@ -33,7 +33,7 @@ public class SaveOrderPersistenceServiceTest {
     @DisplayName("Given Order When Save Then Return Saved Order")
     public void givenOrderWhenSaveThenReturnSavedOrder(){
     	OrderEntity orderEntity = OrderEntity.builder()
-                .withId(UUID.randomUUID())
+                .withId(UUID.randomUUID().toString())
                 .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())

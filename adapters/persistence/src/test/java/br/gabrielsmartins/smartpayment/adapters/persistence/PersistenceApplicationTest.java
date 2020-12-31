@@ -1,10 +1,9 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence;
 
+import br.gabrielsmartins.smartpayment.adapters.persistence.repository.OrderRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-
-import br.gabrielsmartins.smartpayment.adapters.persistence.repository.OrderRepository;
 
 @SpringBootApplication
 @EnableMongoRepositories(basePackageClasses = {OrderRepository.class})

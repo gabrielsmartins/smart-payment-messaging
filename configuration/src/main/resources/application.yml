@@ -1,6 +1,34 @@
 server:
   port: 8080
 
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    properties:
+      request.timeout.ms: 20000
+      retry.backoff.ms: 500
+      schema.registry.url: http://localhost:8081
+    consumer:
+      group-id: smartpayment-orders
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      schema.registry.url: ${spring.kafka.properties.schema.registry.url}
+      properties:
+        specific.avro.reader: true
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      schema.registry.url: ${spring.kafka.properties.schema.registry.url}
+
+topic:
+  input:
+    order-requested: order-requested
+    order-validated: order-validated
+  output:
+    order-status-updated: order-status-updated
+
+
 endpoint:
   orders:
     url: http://localhost:8081/orders

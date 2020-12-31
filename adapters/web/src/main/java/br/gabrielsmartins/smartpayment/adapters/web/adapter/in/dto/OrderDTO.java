@@ -16,7 +16,7 @@ import java.util.*;
 public class OrderDTO {
 
     @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
-    private UUID id;
+    private String id;
 
     @JsonProperty("cusomter_id")
     private UUID customerId;
@@ -39,15 +39,31 @@ public class OrderDTO {
     private String status;
 
     @JsonProperty(value = "logs", access = JsonProperty.Access.WRITE_ONLY)
+    @Getter(AccessLevel.NONE)
     private final Map<LocalDateTime, String> logs = new LinkedHashMap<>();
     
     @JsonProperty(value = "items")
+    @Getter(AccessLevel.NONE)
 	private final List<OrderItemDTO> items = new LinkedList<>();
     
     @JsonProperty(value = "payment_methods")
+    @Getter(AccessLevel.NONE)
 	private final Map<String, BigDecimal> paymentMethods = new LinkedHashMap<>();
-  
-	public Integer addLog(LocalDateTime datetime, String status) {
+
+    public Map<LocalDateTime, String> getLogs() {
+        return Collections.unmodifiableMap(logs);
+    }
+
+
+    public List<OrderItemDTO> getItems() {
+        return Collections.unmodifiableList(items);
+    }
+
+    public Map<String, BigDecimal> getPaymentMethods() {
+        return Collections.unmodifiableMap(paymentMethods);
+    }
+
+    public Integer addLog(LocalDateTime datetime, String status) {
 		this.logs.put(datetime, status);
 		return this.logs.size();
 	}

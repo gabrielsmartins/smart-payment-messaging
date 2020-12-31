@@ -6,6 +6,7 @@ import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper.OrderItemPersistenceMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,8 @@ public class OrderPersistenceMapperTest {
     
     @BeforeEach
     public void setup(){
-        this.mapper = new OrderPersistenceMapperImpl();
+        OrderItemPersistenceMapper orderItemPersistenceMapper = new OrderPersistenceMapper$OrderItemPersistenceMapperImpl();
+        this.mapper = new OrderPersistenceMapperImpl(orderItemPersistenceMapper);
     }
 
     @Test
@@ -30,7 +32,7 @@ public class OrderPersistenceMapperTest {
     public void givenOrderEntityWhenMapThenReturnOrderDomain(){
 
     	Order order = Order.builder()
-                .withId(UUID.randomUUID())
+                .withId(UUID.randomUUID().toString())
                 .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
@@ -71,7 +73,7 @@ public class OrderPersistenceMapperTest {
 
 
     	OrderEntity orderEntity = OrderEntity.builder()
-						                .withId(UUID.randomUUID())
+						                .withId(UUID.randomUUID().toString())
 						                .withCustomerId(UUID.randomUUID())
 						                .withCreatedAt(LocalDateTime.now())
 						                .withFinishedAt(LocalDateTime.now())

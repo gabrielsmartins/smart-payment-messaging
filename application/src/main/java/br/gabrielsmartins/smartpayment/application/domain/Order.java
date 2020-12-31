@@ -19,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 public class Order {
 
-	private UUID id;
+	private String id;
 	private UUID customerId;
 	private LocalDateTime createdAt;
 	private LocalDateTime finishedAt;
@@ -31,10 +31,27 @@ public class Order {
 	
 	@Builder.Default
 	private OrderState state = new NewOrderState();
-		
-	private final Map<LocalDateTime, OrderStatus> logs = new LinkedHashMap<>();
+
+	@Getter(AccessLevel.NONE)
+	private final Map<LocalDateTime, OrderStatus> logs = new HashMap<>();
+
+	@Getter(AccessLevel.NONE)
 	private final List<OrderItem> items = new LinkedList<>();
-	private final Map<PaymentType, BigDecimal> paymentMethods = new LinkedHashMap<>();
+
+	@Getter(AccessLevel.NONE)
+	private final Map<PaymentType, BigDecimal> paymentMethods = new HashMap<>();
+
+	public Map<LocalDateTime, OrderStatus> getLogs() {
+		return Collections.unmodifiableMap(logs);
+	}
+
+	public List<OrderItem> getItems() {
+		return Collections.unmodifiableList(items);
+	}
+
+	public Map<PaymentType, BigDecimal> getPaymentMethods() {
+		return Collections.unmodifiableMap(paymentMethods);
+	}
 
 	public Integer addLog(LocalDateTime datetime, OrderStatus status) {
 		this.logs.put(datetime, status);
@@ -58,9 +75,11 @@ public class Order {
 		 return this.state;
 	}
 
+
+
 	@Getter
 	@Setter
-	@ToString
+	@ToString(exclude = {"order"})
 	@Builder(setterPrefix = "with")
 	@NoArgsConstructor
 	@AllArgsConstructor

@@ -6,6 +6,7 @@ import br.gabrielsmartins.smartpayment.adapters.web.adapter.out.dto.OrderRequest
 import br.gabrielsmartins.smartpayment.adapters.web.mapper.out.OrderRequestMapper;
 import br.gabrielsmartins.smartpayment.adapters.web.mapper.out.OrderRequestMapperImpl;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.Order.*;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ public class SendOrderWebAdapterTest {
     public void givenOrderWhenSendThenCallClient(){
         Order order = Order.builder()
                 .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID().toString())
+                .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
@@ -45,8 +46,16 @@ public class SendOrderWebAdapterTest {
                 .build();
 
         order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-        order.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
+
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+        order.addItem(item);
+
         order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+
 
         this.adapter.send(order);
 

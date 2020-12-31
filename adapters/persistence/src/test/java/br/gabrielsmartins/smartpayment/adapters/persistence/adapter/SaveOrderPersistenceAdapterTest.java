@@ -1,25 +1,25 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.adapter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper$OrderItemPersistenceMapperImpl;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper.OrderItemPersistenceMapper;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapperImpl;
+import br.gabrielsmartins.smartpayment.adapters.persistence.service.SaveOrderPersistenceService;
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapperImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import br.gabrielsmartins.smartpayment.adapters.persistence.adapter.SaveOrderPersistenceAdapter;
-import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper;
-import br.gabrielsmartins.smartpayment.adapters.persistence.service.SaveOrderPersistenceService;
-import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SaveOrderPersistenceAdapterTest {
 
@@ -30,7 +30,8 @@ public class SaveOrderPersistenceAdapterTest {
     @BeforeEach
     public void setup(){
         this.service = mock(SaveOrderPersistenceService.class);
-        this.mapper = new OrderPersistenceMapperImpl();
+        OrderItemPersistenceMapper itemPersistenceMapper = new OrderPersistenceMapper$OrderItemPersistenceMapperImpl();
+        this.mapper = new OrderPersistenceMapperImpl(itemPersistenceMapper);
         this.adapter = new SaveOrderPersistenceAdapter(service,mapper);
     }
 
@@ -39,7 +40,7 @@ public class SaveOrderPersistenceAdapterTest {
     public void givenOrderWhenSaveThenReturnSavedOrder(){
 
         Order order = Order.builder()
-                            .withId(UUID.randomUUID())
+                            .withId(UUID.randomUUID().toString())
                             .withCustomerId(UUID.randomUUID())
                             .withCreatedAt(LocalDateTime.now())
                             .withFinishedAt(LocalDateTime.now())

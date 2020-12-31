@@ -2,7 +2,9 @@ package br.gabrielsmartins.smartpayment.adapters.web.mapper.in;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderDTO;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper.OrderItemWebMapper;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,16 +22,17 @@ public class OrderWebMapperTest {
 
     @BeforeEach
     public void setup(){
-        this.mapper = new OrderWebMapperImpl();
+        OrderItemWebMapper orderItemWebMapper = new OrderWebMapper$OrderItemWebMapperImpl();
+        this.mapper = new OrderWebMapperImpl(orderItemWebMapper);
     }
 
     @Test
     @DisplayName("Given Order Domain When Map Then Return Order DTO")
     public void givenOrderDomainWhenMapThenReturnOrderDTO(){
 
-    	Order order = Order.builder()
+        Order order = Order.builder()
                 .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID().toString())
+                .withCustomerId(UUID.randomUUID())
                 .withCreatedAt(LocalDateTime.now())
                 .withFinishedAt(LocalDateTime.now())
                 .withStatus(OrderStatus.COMPLETED)
@@ -37,9 +40,16 @@ public class OrderWebMapperTest {
                 .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
-    	order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
-    	order.addItem(UUID.randomUUID().toString(), BigDecimal.ZERO);
-    	order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+        order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
+
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(10);
+        item.setAmount(BigDecimal.TEN);
+
+        order.addItem(item);
+
+        order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
         OrderDTO orderDTO = this.mapper.mapToDto(order);
 
