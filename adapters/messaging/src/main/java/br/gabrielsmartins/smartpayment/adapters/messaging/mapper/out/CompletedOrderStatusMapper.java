@@ -40,6 +40,7 @@ public class CompletedOrderStatusMapper implements OrderStatusMapper<OrderComple
                 .setTotalDiscount(order.getTotalDiscount())
                 .setItems(items)
                 .setPaymentMethods(paymentMethods)
+                .setFinishedAt(order.getFinishedAt())
                 .build();
     }
 }

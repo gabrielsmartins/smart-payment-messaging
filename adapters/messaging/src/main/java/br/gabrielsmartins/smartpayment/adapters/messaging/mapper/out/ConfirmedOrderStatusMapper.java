@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ConfirmedOrderStatusMapper implements OrderStatusMapper<OrderConfirmed> {
 
-    private final RequestedOrderItemStatusMapper itemMapper;
-
     @Override
     public OrderConfirmed mapToMessage(Order order) {
         return OrderConfirmed.newBuilder()

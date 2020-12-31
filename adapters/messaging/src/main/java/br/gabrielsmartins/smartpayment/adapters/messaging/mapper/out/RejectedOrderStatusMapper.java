@@ -40,6 +40,7 @@ public class RejectedOrderStatusMapper implements OrderStatusMapper<OrderRejecte
                 .setTotalDiscount(order.getTotalDiscount())
                 .setItems(items)
                 .setPaymentMethods(paymentMethods)
+                .setFinishedAt(order.getFinishedAt())
                 .build();
     }
 }

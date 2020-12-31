@@ -4,51 +4,43 @@ import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
+import java.lang.reflect.ParameterizedType;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderStatusMapperFactory {
 
     private static OrderStatusMapperFactory factory;
-    private static final List<OrderStatusMapper<?>> MAPPERS = new LinkedList<>();
+    private static final Map<String, OrderStatusMapper<?>> MAPPERS_MAP = new LinkedHashMap<>();
+    private static List<OrderStatusMapper<?>> mappers;
 
     @Autowired
     private OrderStatusMapperFactory(List<OrderStatusMapper<?>> mappers){
-        MAPPERS.addAll(mappers);
+        OrderStatusMapperFactory.mappers = mappers;
+        MAPPERS_MAP.putAll(build(mappers));
     }
 
-    public static OrderStatusMapper<?> createMapper(OrderStatus status){
-        Class<? extends OrderStatusMapper> clazz = extractMapperClass(status);
-        return MAPPERS.stream()
-                      .filter(m -> m.getClass().isAssignableFrom(clazz))
-                      .findFirst()
-                      .orElseThrow();
+    public static OrderStatusMapper<?> createMapper(OrderStatus orderStatus){
+        return MAPPERS_MAP.get(orderStatus);
     }
 
-    private static Class<? extends OrderStatusMapper> extractMapperClass(OrderStatus status) {
-        switch (status){
-            case REQUESTED:
-                return RequestedOrderStatusMapper.class;
+    private Map<String, OrderStatusMapper<?>> build(List<OrderStatusMapper<?>> mappers){
+        return mappers.stream()
+                      .collect(Collectors.toMap(this::getKey, Function.identity()));
+    }
 
-            case VALIDATED:
-                return ValidatedOrderStatusMapper.class;
-
-            case REJECTED:
-                return RejectedOrderStatusMapper.class;
-
-            case CONFIRMED:
-                return ConfirmedOrderStatusMapper.class;
-
-            case COMPLETED:
-                return CompletedOrderStatusMapper.class;
-        }
-        return null;
+    private String getKey(OrderStatusMapper<?> mapper){
+        Class<?> clazz = (Class<?>) ((ParameterizedType) (mapper.getClass().getGenericSuperclass())).getActualTypeArguments()[0];
+        return clazz.getName();
     }
 
     public static OrderStatusMapperFactory getInstance(){
         if(factory == null) {
-            factory = new OrderStatusMapperFactory(MAPPERS);
+            factory = new OrderStatusMapperFactory(mappers);
         }
         return factory;
     }
