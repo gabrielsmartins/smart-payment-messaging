@@ -1,4 +1,4 @@
 spring:
-    data:
-        mongodb:
-            database: smartpaymentdb
+  data:
+    mongodb:
+      database: smartpaymentdb

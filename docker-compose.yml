@@ -1,6 +1,17 @@
-version: "3"
+version: "3.7"
 
 services:
+  mongodb:
+    image: mongo:bionic
+    restart: always
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=customersdb
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    network_mode: "host"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     hostname: zookeeper

@@ -1,3 +1,0 @@
-endpoint:
-  orders:
-    url: http://localhost:8081/orders

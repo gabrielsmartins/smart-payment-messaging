@@ -2,6 +2,13 @@ server:
   port: 8080
 
 spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      password:
+      port: 27017
+      username:
   kafka:
     bootstrap-servers: localhost:9092
     properties:

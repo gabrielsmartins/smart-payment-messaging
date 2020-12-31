@@ -1,8 +1,8 @@
 spring:
-    data:
-        mongodb:
-            #authentication-database: admin
-            host: localhost
-            #password:
-            port: 27017
-            #username:
+   data:
+      mongodb:
+         #authentication-database: admin
+         host: localhost
+         #password:
+         port: 27017
+         #username:
