@@ -6,7 +6,7 @@ services:
     restart: always
     container_name: mongodb
     environment:
-      - MONGO_INITDB_DATABASE=customersdb
+      - MONGO_INITDB_DATABASE=orderdb
     ports:
       - "27017:27017"
       - "28017:28017"

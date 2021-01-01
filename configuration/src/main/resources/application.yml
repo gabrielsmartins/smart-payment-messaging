@@ -4,6 +4,7 @@ server:
 spring:
   data:
     mongodb:
+      database: orderdb
       authentication-database: admin
       host: localhost
       password:
@@ -27,6 +28,12 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schema.registry.url: ${spring.kafka.properties.schema.registry.url}
+  sleuth:
+    opentracing:
+      enabled: true
+    sampler:
+      probability: 1.0
+    trace-id128: true
 
 topic:
   input:

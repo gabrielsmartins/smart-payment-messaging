@@ -5,33 +5,17 @@ sourceCompatibility = '11'
 targetCompatibility = '11'
 compileJava.options.encoding = 'UTF-8'
 
-repositories {
-    jcenter()
-    mavenCentral()
-    maven {
-        name "confluent"
-        url "http://packages.confluent.io/maven/"
-    }
-}
+apply from: "$rootDir/repositories.gradle", to: buildscript
 
 buildscript {
+    apply from: "$rootDir/repositories.gradle", to: buildscript
     ext {
         springBootDependencyManagementPluginVersion = '1.0.9.RELEASE'
-    }
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven {
-            name "gradle"
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
-            name "confluent"
-            url "http://packages.confluent.io/maven/"
-        }
+        avroPluginVersion = '0.22.0'
     }
     dependencies {
         classpath group: 'io.spring.gradle', name: 'dependency-management-plugin', version: springBootDependencyManagementPluginVersion
+        classpath group: 'com.commercehub.gradle.plugin', name: 'gradle-avro-plugin', version: avroPluginVersion
     }
 }
 
@@ -43,16 +27,7 @@ allprojects {
     targetCompatibility = '11'
 
     compileJava.options.encoding = 'UTF-8'
-
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven {
-            name "confluent"
-            url "http://packages.confluent.io/maven/"
-        }
-    }
-
+    apply from: "$rootDir/repositories.gradle"
 }
 
 subprojects {
@@ -74,6 +49,7 @@ subprojects {
         avroVersion = '1.10.1'
         confluentVersion = '6.0.1'
         awaitilityVersion = '4.0.3'
+        logstashVersion = '6.4'
     }
 
     dependencies {
@@ -96,12 +72,12 @@ subprojects {
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: mapStructVersion
 
         implementation 'org.springframework.boot:spring-boot-starter'
-
-
         implementation 'org.springframework.boot:spring-boot-starter-validation'
 
         implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
         implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+
+        implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: logstashVersion
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

@@ -1,27 +1,25 @@
-plugins {
-	id 'com.commercehub.gradle.plugin.avro' version '0.22.0'
-}
+apply plugin: 'com.commercehub.gradle.plugin.avro'
 
 dependencies {
 
-	implementation project(':application')
-	implementation project(':common')
+    implementation project(':application')
+    implementation project(':common')
 
-	implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.kafka:spring-kafka'
 
-	implementation group: 'io.confluent', name: 'kafka-schema-registry-client', version: confluentVersion
-	implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: confluentVersion
+    implementation group: 'io.confluent', name: 'kafka-schema-registry-client', version: confluentVersion
+    implementation group: 'io.confluent', name: 'kafka-avro-serializer', version: confluentVersion
 
-	implementation group: 'org.apache.avro', name: 'avro', version: avroVersion
+    implementation group: 'org.apache.avro', name: 'avro', version: avroVersion
 
-	testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 
-	testImplementation group: 'org.awaitility', name: 'awaitility', version: awaitilityVersion
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: awaitilityVersion
 }
 
 
-avro{
-	enableDecimalLogicalType = true
-	outputCharacterEncoding = "UTF-8"
+avro {
+    enableDecimalLogicalType = true
+    outputCharacterEncoding = "UTF-8"
 }
 
