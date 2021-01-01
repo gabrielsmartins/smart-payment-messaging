@@ -15,19 +15,19 @@ This project is an example implementation of a hexagonal architecture using the 
 
 1.Run Docker Services:
 
-```console
+```bash
 docker-compose up -d
 ```
 
 2.Run Application:
 
-```console
+```bash
 ./gradlew bootRun --args='--spring.profiles.active=test'
 ```
 
 OR
 
-```console
+```bash
 ./gradlew bootRun --args='--spring.profiles.active=<profile>'
 ```
 
@@ -39,7 +39,7 @@ OR
 
 3.For MongoDB use MongDCompass with url: 
 
-```console
+```bash
 mongodb://localhost:27017
 ```
 
