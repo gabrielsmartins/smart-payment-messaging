@@ -18,9 +18,12 @@ public abstract class OrderState implements OrderStateObservable {
 
     public OrderState(Order order){
         this.order = order;
+        this.order.setState(this);
+        this.order.setStatus(this.getStatus());
         OrderStateObserverFactory factory = OrderStateObserverFactory.getInstance();
 		List<OrderStateObserver> observers = factory.getObservers();
 		observers.forEach(this::register);
+		this.notifyAll(this);
     }
 
     public OrderState(){

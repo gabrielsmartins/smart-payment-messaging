@@ -1,5 +1,7 @@
 package br.gabrielsmartins.smartpayment.adapters.web.adapter.in;
 
+import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SubmitOrderController {
 
-    private final SaveOrderUseCase saveOrderUseCase;
+    private final SubmitOrderUseCase useCase;
     private final OrderWebMapper mapper;
 
     @PostMapping
     public ResponseEntity<?> save(@RequestHeader HttpHeaders httpHeaders, @RequestBody OrderDTO orderDTO){
         Order order = mapper.mapToDomain(orderDTO);
-        Order savedOrder = saveOrderUseCase.save(order);
-        return new ResponseEntity<>(mapper.mapToDto(savedOrder), HttpStatus.ACCEPTED);
+        var command = new SubmitOrderCommand(order);
+        Order submittedOrder = useCase.submit(command);
+        return new ResponseEntity<>(mapper.mapToDto(submittedOrder), HttpStatus.ACCEPTED);
     }
 
 }

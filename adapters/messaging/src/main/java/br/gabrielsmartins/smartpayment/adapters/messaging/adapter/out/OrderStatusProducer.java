@@ -26,6 +26,6 @@ public class OrderStatusProducer implements SendOrderStatusPort {
         SpecificRecord message = mapper.mapToMessage(order);
         String topic = topicProperties.getOutputTopic(TopicProperties.ORDER_STATUS_UPDATED);
         log.info("Sending message: {}", message);
-        template.send(topic, order.getId().toString(), message);
+        template.send(topic, order.getId(), message);
     }
 }

@@ -19,6 +19,7 @@ public class SaveOrderPersistenceAdapter implements SaveOrderPort {
     public Order save(Order order) {
         OrderEntity orderEntity = mapper.mapToEntity(order);
         OrderEntity savedOrderEntity = service.save(orderEntity);
+        order.setId(savedOrderEntity.getId());
         return mapper.mapToDomain(savedOrderEntity);
     }
 }

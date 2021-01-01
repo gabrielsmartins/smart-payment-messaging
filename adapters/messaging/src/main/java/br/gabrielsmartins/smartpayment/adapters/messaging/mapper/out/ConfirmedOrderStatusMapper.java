@@ -14,7 +14,7 @@ public class ConfirmedOrderStatusMapper implements OrderStatusMapper<OrderConfir
     @Override
     public OrderConfirmed mapToMessage(Order order) {
         return OrderConfirmed.newBuilder()
-                .setId(order.getId().toString())
+                .setId(order.getId())
                 .setCustomerId(order.getCustomerId().toString())
                 .setCreatedAt(order.getCreatedAt())
                 .setTotalAmount(order.getTotalAmount())

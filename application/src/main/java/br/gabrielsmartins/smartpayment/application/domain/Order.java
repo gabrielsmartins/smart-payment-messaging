@@ -4,6 +4,7 @@ import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.NewOrderState;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderState;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -70,9 +71,7 @@ public class Order {
 	}
 
 	public OrderState next() {
-		 this.state = this.state.next(this);
-		 this.status = state.getStatus();
-		 return this.state;
+		 return this.state.next(this);
 	}
 
 
@@ -91,8 +90,5 @@ public class Order {
 		private BigDecimal amount;
 
 	}
-
-	
-
 
 }

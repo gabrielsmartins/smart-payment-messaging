@@ -34,7 +34,7 @@ public class RejectedOrderStatusMapper implements OrderStatusMapper<OrderRejecte
                                                                      .collect(Collectors.toList());
 
         return OrderRejected.newBuilder()
-                .setId(order.getId().toString())
+                .setId(order.getId())
                 .setCustomerId(order.getCustomerId().toString())
                 .setCreatedAt(order.getCreatedAt())
                 .setTotalAmount(order.getTotalAmount())

@@ -16,7 +16,7 @@ public class NewOrderState extends OrderState {
 
     @Override
     public OrderState next(Order order) {
-        return new RequestedOrderState(this.order);
+        return new RequestedOrderState(order);
     }
     
     

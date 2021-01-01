@@ -15,7 +15,7 @@ public class ValidatedOrderStatusMapper implements OrderStatusMapper<OrderValida
     public OrderValidated mapToMessage(Order order) {
 
         return OrderValidated.newBuilder()
-                .setId(order.getId().toString())
+                .setId(order.getId())
                 .setCustomerId(order.getCustomerId().toString())
                 .setCreatedAt(order.getCreatedAt())
                 .setTotalAmount(order.getTotalAmount())

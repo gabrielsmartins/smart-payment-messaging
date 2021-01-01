@@ -8,7 +8,8 @@ import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
-import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ public class SubmitOrderControllerTest {
     private ObjectMapper mapper;
 
     @MockBean
-    private SaveOrderUseCase saveOrderUseCase;
+    private SubmitOrderUseCase useCase;
 
     @SpyBean
     private OrderWebMapperImpl orderWebMapper;
@@ -90,7 +91,7 @@ public class SubmitOrderControllerTest {
 
         order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
 
-        when(saveOrderUseCase.save(any(Order.class))).thenReturn(order);
+        when(useCase.submit(any(SubmitOrderCommand.class))).thenReturn(order);
 
         mockMvc.perform(post("/orders")
                                  .content(content)

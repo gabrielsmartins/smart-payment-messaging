@@ -34,7 +34,7 @@ public class RequestedOrderStatusMapper implements OrderStatusMapper<OrderReques
                                                                      .collect(Collectors.toList());
 
         return OrderRequested.newBuilder()
-                .setId(order.getId().toString())
+                .setId(order.getId())
                 .setCustomerId(order.getCustomerId().toString())
                 .setCreatedAt(order.getCreatedAt())
                 .setTotalAmount(order.getTotalAmount())

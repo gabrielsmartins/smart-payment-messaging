@@ -34,7 +34,7 @@ public class CompletedOrderStatusMapper implements OrderStatusMapper<OrderComple
                                                                      .collect(Collectors.toList());
 
         return OrderCompleted.newBuilder()
-                .setId(order.getId().toString())
+                .setId(order.getId())
                 .setCustomerId(order.getCustomerId().toString())
                 .setCreatedAt(order.getCreatedAt())
                 .setTotalAmount(order.getTotalAmount())

@@ -5,13 +5,13 @@ spring:
   data:
     mongodb:
       database: orderdb
-      authentication-database: admin
+      #authentication-database: admin
       host: localhost
-      password:
       port: 27017
-      username:
+      #password: root
+      #username: password
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: 127.0.0.1:9092
     properties:
       request.timeout.ms: 20000
       retry.backoff.ms: 500
@@ -28,6 +28,8 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       schema.registry.url: ${spring.kafka.properties.schema.registry.url}
+  zipkin:
+    base-url: http://localhost:9411
   sleuth:
     opentracing:
       enabled: true
@@ -41,7 +43,6 @@ topic:
     order-validated: order-validated
   output:
     order-status-updated: order-status-updated
-
 
 endpoint:
   orders:

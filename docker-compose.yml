@@ -2,15 +2,28 @@ version: "3.7"
 
 services:
   mongodb:
-    image: mongo:bionic
-    restart: always
+    image: mongo
+    restart: unless-stopped
     container_name: mongodb
-    environment:
-      - MONGO_INITDB_DATABASE=orderdb
+    #environment:
+      #- MONGO_INITDB_ROOT_USERNAME=root
+      #- MONGO_INITDB_ROOT_PASSWORD=password
     ports:
       - "27017:27017"
       - "28017:28017"
-    network_mode: "host"
+
+  jaeger-server:
+    image: jaegertracing/all-in-one:1.18.1
+    container_name: jaeger-server
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
