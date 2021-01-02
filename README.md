@@ -24,7 +24,7 @@ docker-compose up -d
 2.Run Application:
 
 ```bash
-./gradlew bootRun --args='--spring.profiles.active=test'
+./gradlew bootRun
 ```
 
 OR
@@ -39,7 +39,7 @@ OR
 
 2.For Kafka Control Center UI go to browser and navigate: http://localhost:9021/
 
-3.For MongoDB use MongDCompass with url: 
+3.For MongoDB use MongDCompass with URL: 
 
 ```bash
 mongodb://localhost:27017
