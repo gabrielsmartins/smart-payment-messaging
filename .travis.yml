@@ -14,13 +14,13 @@ jobs:
   include:
     - stage: "compile"
       name: " Compile"
-      script: ./gradlew compileTestJava --scan --no-daemon
+      script: ./gradlew compileTestJava
     - stage: "test"
       name: " Tests"
-      script: ./gradlew test --scan --no-daemon
+      script: ./gradlew test
     - stage: "build"
       name: "Build"
-      script: ./gradlew assemble --scan --no-daemon
+      script: ./gradlew assemble
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
