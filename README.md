@@ -1,5 +1,7 @@
 # Example Implementation of a Hexagonal Architecture
 
+[![Build Status](https://travis-ci.com/gabrielsmartins/smartpayment-orders.svg?branch=master)](https://travis-ci.com/gabrielsmartins/smartpayment-orders)
+
 This project is an example implementation of a hexagonal architecture using the following technologies:
 
 - JDK 11
