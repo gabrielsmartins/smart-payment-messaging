@@ -2,10 +2,11 @@ package br.gabrielsmartins.smartpayment.adapters.web.mapper.in;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderDTO;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.OrderWebMapper.OrderItemWebMapper;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,10 @@ public class OrderWebMapperTest {
 
     @BeforeEach
     public void setup(){
-        OrderItemWebMapper orderItemWebMapper = new OrderWebMapper$OrderItemWebMapperImpl();
-        this.mapper = new OrderWebMapperImpl(orderItemWebMapper);
+        var orderLogWebMapper = new OrderLogWebMapperImpl();
+        var orderItemWebMapper = new OrderItemWebMapperImpl();
+        var paymentMethodWebMapper = new PaymentMethodWebMapperImpl();
+        this.mapper = new OrderWebMapperImpl(orderLogWebMapper, orderItemWebMapper, paymentMethodWebMapper);
     }
 
     @Test
@@ -40,7 +43,12 @@ public class OrderWebMapperTest {
                 .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
-        order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
+        OrderLog orderLog = OrderLog.builder()
+                .withStatus(OrderStatus.COMPLETED)
+                .withDatetime(LocalDateTime.now())
+                .build();
+
+        order.addLog(orderLog);
 
         OrderItem item = new OrderItem();
         item.setProductId(UUID.randomUUID());
@@ -49,7 +57,12 @@ public class OrderWebMapperTest {
 
         order.addItem(item);
 
-        order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+        PaymentMethod paymentMethod = PaymentMethod.builder()
+                .withPaymentType(PaymentType.CASH)
+                .withAmount(BigDecimal.TEN)
+                .build();
+
+        order.addPaymentMethod(paymentMethod);
 
         OrderDTO orderDTO = this.mapper.mapToDto(order);
 

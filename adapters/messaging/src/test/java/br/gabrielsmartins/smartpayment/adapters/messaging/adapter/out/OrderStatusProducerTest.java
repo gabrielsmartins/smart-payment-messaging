@@ -3,9 +3,11 @@ package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.out;
 
 import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
+import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
@@ -76,7 +78,12 @@ public class OrderStatusProducerTest {
                 .withTotalDiscount(BigDecimal.valueOf(1400.00))
                 .build();
 
-        order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
+        OrderLog orderLog = OrderLog.builder()
+                .withStatus(OrderStatus.COMPLETED)
+                .withDatetime(LocalDateTime.now())
+                .build();
+
+        order.addLog(orderLog);
 
         OrderItem item = new OrderItem();
         item.setProductId(UUID.randomUUID());
@@ -85,7 +92,12 @@ public class OrderStatusProducerTest {
 
         order.addItem(item);
 
-        order.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+        PaymentMethod paymentMethod = PaymentMethod.builder()
+                .withPaymentType(PaymentType.CASH)
+                .withAmount(BigDecimal.TEN)
+                .build();
+
+        order.addPaymentMethod(paymentMethod);
 
         producer.send(order);
 
@@ -94,7 +106,7 @@ public class OrderStatusProducerTest {
         ConsumerRecord<String, SpecificRecord> singleRecord = KafkaTestUtils.getSingleRecord(consumer, topic);
 
         assertThat(singleRecord).isNotNull();
-        assertThat(singleRecord.key()).isEqualTo(order.getId().toString());
+        assertThat(singleRecord.key()).isEqualTo(order.getId());
         assertThat(singleRecord.value()).isNotNull();
     }
 

@@ -1,10 +1,7 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.adapter;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper;
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper$OrderItemPersistenceMapperImpl;
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapper.OrderItemPersistenceMapper;
-import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.OrderPersistenceMapperImpl;
+import br.gabrielsmartins.smartpayment.adapters.persistence.mapper.*;
 import br.gabrielsmartins.smartpayment.adapters.persistence.service.SaveOrderPersistenceService;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
@@ -30,8 +27,10 @@ public class SaveOrderPersistenceAdapterTest {
     @BeforeEach
     public void setup(){
         this.service = mock(SaveOrderPersistenceService.class);
-        OrderItemPersistenceMapper itemPersistenceMapper = new OrderPersistenceMapper$OrderItemPersistenceMapperImpl();
-        this.mapper = new OrderPersistenceMapperImpl(itemPersistenceMapper);
+        OrderLogPersistenceMapper orderLogPersistenceMapper = new OrderLogPersistenceMapperImpl();
+        OrderItemPersistenceMapper itemPersistenceMapper = new OrderItemPersistenceMapperImpl();
+        PaymentMethodPersistenceMapper paymentMethodPersistenceMapper = new PaymentMethodPersistenceMapperImpl();
+        this.mapper = new OrderPersistenceMapperImpl(orderLogPersistenceMapper,itemPersistenceMapper, paymentMethodPersistenceMapper);
         this.adapter = new SaveOrderPersistenceAdapter(service,mapper);
     }
 

@@ -1,8 +1,9 @@
 package br.gabrielsmartins.smartpayment.application.domain;
 
-import br.gabrielsmartins.smartpayment.application.domain.Order.OrderItem;
+
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
+import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,12 @@ public class OrderTest {
 	@DisplayName("Given Order When Add Log Then Return Logs Size")
 	public void givenOrderWhenAddLogThenReturnLogsSize() {
 		Order order = new Order();
-		Integer logsSize = order.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
+
+		OrderLog log = new OrderLog();
+		log.setDatetime(LocalDateTime.now());
+		log.setStatus(OrderStatus.COMPLETED);
+
+		Integer logsSize = order.addLog(log);
 		assertThat(logsSize).isEqualTo(1);
 		assertThat(order.getLogs().size()).isEqualTo(1);
 	}
@@ -50,7 +56,11 @@ public class OrderTest {
 		item.setQuantity(10);
 		item.setAmount(BigDecimal.TEN);
 
-		Integer paymentMethosSize = order.addPaymentMethod(PaymentType.CASH, BigDecimal.TEN);
+		PaymentMethod paymentMethod = new PaymentMethod();
+		paymentMethod.setPaymentType(PaymentType.CASH);
+		paymentMethod.setAmount(BigDecimal.TEN);
+
+		Integer paymentMethosSize = order.addPaymentMethod(paymentMethod);
 		assertThat(paymentMethosSize).isEqualTo(1);
 		assertThat(order.getPaymentMethods().size()).isEqualTo(1);
 	}

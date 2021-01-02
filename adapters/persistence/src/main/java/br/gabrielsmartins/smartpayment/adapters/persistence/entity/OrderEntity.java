@@ -1,7 +1,6 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.entity;
 
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderState;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -11,7 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 
 @ToString(exclude = {"logs", "items", "paymentMethods"})
@@ -50,7 +52,7 @@ public class OrderEntity {
 
     @Field("logs")
     @Getter(AccessLevel.NONE)
-    private final Map<LocalDateTime, OrderStatus> logs = new HashMap<>();
+    private final List<OrderLogEntity> logs = new LinkedList<>();
     
     @Field("items")
     @Getter(AccessLevel.NONE)
@@ -58,22 +60,23 @@ public class OrderEntity {
 	
     @Field("payment_methods")
     @Getter(AccessLevel.NONE)
-	private final Map<PaymentType, BigDecimal> paymentMethods = new HashMap<>();
+	private final List<PaymentMethodEntity> paymentMethods = new LinkedList<>();
 
-    public Map<LocalDateTime, OrderStatus> getLogs() {
-        return Collections.unmodifiableMap(logs);
+    public List<OrderLogEntity> getLogs() {
+        return Collections.unmodifiableList(logs);
     }
 
     public List<OrderItemEntity> getItems() {
         return Collections.unmodifiableList(items);
     }
 
-    public Map<PaymentType, BigDecimal> getPaymentMethods() {
-        return Collections.unmodifiableMap(paymentMethods);
+    public List<PaymentMethodEntity> getPaymentMethods() {
+        return Collections.unmodifiableList(paymentMethods);
     }
 
-	public Integer addLog(LocalDateTime datetime, OrderStatus status) {
-		this.logs.put(datetime, status);
+	public Integer addLog(OrderLogEntity log) {
+        log.setOrder(this);
+		this.logs.add(log);
 		return this.logs.size();
 	}
 	
@@ -83,31 +86,11 @@ public class OrderEntity {
 		return this.items.size();
 	}
 	
-	public Integer addPaymentMethod(PaymentType paymentType, BigDecimal amount) {
-		this.paymentMethods.put(paymentType, amount);
+	public Integer addPaymentMethod(PaymentMethodEntity paymentMethod) {
+        paymentMethod.setOrder(this);
+		this.paymentMethods.add(paymentMethod);
 		return this.paymentMethods.size();
 	}
 
-    @Getter
-    @Setter
-    @ToString(exclude = {"order"})
-    @Builder(setterPrefix = "with")
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class OrderItemEntity {
-
-	    @Transient
-	    private OrderEntity order;
-
-        @Field("product_id")
-        private UUID productId;
-
-        @Field("quantity")
-        private Integer quantity;
-
-        @Field("amount")
-        private BigDecimal amount;
-
-    }
 
 }

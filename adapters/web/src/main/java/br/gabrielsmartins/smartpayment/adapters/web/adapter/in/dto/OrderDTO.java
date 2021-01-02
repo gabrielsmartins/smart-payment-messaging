@@ -1,11 +1,16 @@
 package br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -40,7 +45,7 @@ public class OrderDTO {
 
     @JsonProperty(value = "logs", access = JsonProperty.Access.READ_ONLY)
     @Getter(AccessLevel.NONE)
-    private final Map<LocalDateTime, String> logs = new LinkedHashMap<>();
+    private final List<OrderLogDTO> logs = new LinkedList<>();
     
     @JsonProperty(value = "items")
     @Getter(AccessLevel.NONE)
@@ -50,8 +55,8 @@ public class OrderDTO {
     @Getter(AccessLevel.NONE)
 	private final List<PaymentMethodDTO> paymentMethods = new LinkedList<>();
 
-    public Map<LocalDateTime, String> getLogs() {
-        return Collections.unmodifiableMap(logs);
+    public List<OrderLogDTO> getLogs() {
+        return Collections.unmodifiableList(logs);
     }
 
     public List<OrderItemDTO> getItems() {
@@ -62,8 +67,8 @@ public class OrderDTO {
         return Collections.unmodifiableList(paymentMethods);
     }
 
-    public Integer addLog(LocalDateTime datetime, String status) {
-		this.logs.put(datetime, status);
+    public Integer addLog(OrderLogDTO orderLog) {
+		this.logs.add(orderLog);
 		return this.logs.size();
 	}
 	
@@ -77,38 +82,4 @@ public class OrderDTO {
 		return this.paymentMethods.size();
 	}
 
-    @Getter
-    @Setter
-    @ToString
-    @Builder(setterPrefix = "with")
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class OrderItemDTO {
-
-        @JsonProperty("product_id")
-        private UUID productId;
-
-        @JsonProperty("quantity")
-        private Integer quantity;
-
-        @JsonProperty("item_amount")
-        private BigDecimal amount;
-
-    }
-
-    @Getter
-    @Setter
-    @ToString
-    @Builder(setterPrefix = "with")
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PaymentMethodDTO {
-
-        @JsonProperty("payment_type")
-        private String paymentType;
-
-        @JsonProperty("payment_amount")
-        private BigDecimal amount;
-
-    }
 }

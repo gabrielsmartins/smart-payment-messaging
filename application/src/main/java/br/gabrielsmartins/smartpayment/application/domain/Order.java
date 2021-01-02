@@ -1,15 +1,17 @@
 package br.gabrielsmartins.smartpayment.application.domain;
 
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.NewOrderState;
+import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderState;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -34,28 +36,29 @@ public class Order {
 	private OrderState state = new NewOrderState();
 
 	@Getter(AccessLevel.NONE)
-	private final Map<LocalDateTime, OrderStatus> logs = new HashMap<>();
+	private final List<OrderLog> logs = new LinkedList<>();
 
 	@Getter(AccessLevel.NONE)
 	private final List<OrderItem> items = new LinkedList<>();
 
 	@Getter(AccessLevel.NONE)
-	private final Map<PaymentType, BigDecimal> paymentMethods = new HashMap<>();
+	private final List<PaymentMethod> paymentMethods = new LinkedList<>();
 
-	public Map<LocalDateTime, OrderStatus> getLogs() {
-		return Collections.unmodifiableMap(logs);
+	public List<OrderLog> getLogs() {
+		return Collections.unmodifiableList(logs);
 	}
 
 	public List<OrderItem> getItems() {
 		return Collections.unmodifiableList(items);
 	}
 
-	public Map<PaymentType, BigDecimal> getPaymentMethods() {
-		return Collections.unmodifiableMap(paymentMethods);
+	public List<PaymentMethod> getPaymentMethods() {
+		return Collections.unmodifiableList(paymentMethods);
 	}
 
-	public Integer addLog(LocalDateTime datetime, OrderStatus status) {
-		this.logs.put(datetime, status);
+	public Integer addLog(OrderLog log) {
+		log.setOrder(this);
+		this.logs.add(log);
 		return this.logs.size();
 	}
 	
@@ -65,8 +68,9 @@ public class Order {
 		return this.items.size();
 	}
 	
-	public Integer addPaymentMethod(PaymentType paymentType, BigDecimal amount) {
-		this.paymentMethods.put(paymentType, amount);
+	public Integer addPaymentMethod(PaymentMethod paymentMethod) {
+		paymentMethod.setOrder(this);
+		this.paymentMethods.add(paymentMethod);
 		return this.paymentMethods.size();
 	}
 
@@ -76,19 +80,6 @@ public class Order {
 
 
 
-	@Getter
-	@Setter
-	@ToString(exclude = {"order"})
-	@Builder(setterPrefix = "with")
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class OrderItem {
 
-		private Order order;
-		private UUID productId;
-		private Integer quantity;
-		private BigDecimal amount;
-
-	}
 
 }

@@ -5,7 +5,7 @@ import br.gabrielsmartins.schemas.new_order.NewOrder;
 import br.gabrielsmartins.schemas.new_order.PaymentMethod;
 import br.gabrielsmartins.schemas.new_order.PaymentType;
 import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingMapper;
+import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingInputMapper;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
@@ -60,7 +60,7 @@ public class OrderConsumerTest {
     private SubmitOrderUseCase useCase;
 
     @SpyBean
-    private OrderMessagingMapper mapper;
+    private OrderMessagingInputMapper mapper;
 
     @Autowired
     private TopicProperties topicProperties;

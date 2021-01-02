@@ -2,7 +2,9 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.repository;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.config.DatabaseConfiguration;
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity;
-import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderEntity.OrderItemEntity;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderItemEntity;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderLogEntity;
+import br.gabrielsmartins.smartpayment.adapters.persistence.entity.PaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.DisplayName;
@@ -34,24 +36,35 @@ public class OrderRepositoryTest {
 	public void givenOrderWhenSaveThenReturnSavedOrder() {
 
 		OrderEntity orderEntity = OrderEntity.builder()
-				.withCustomerId(UUID.randomUUID())
-				.withCreatedAt(LocalDateTime.now())
-				.withFinishedAt(LocalDateTime.now())
-				.withStatus(OrderStatus.COMPLETED)
-				.withTotalAmount(BigDecimal.valueOf(1500.00))
-				.withTotalDiscount(BigDecimal.valueOf(1400.00))
-				.build();
+											.withCustomerId(UUID.randomUUID())
+											.withCreatedAt(LocalDateTime.now())
+											.withFinishedAt(LocalDateTime.now())
+											.withStatus(OrderStatus.COMPLETED)
+											.withTotalAmount(BigDecimal.valueOf(1500.00))
+											.withTotalDiscount(BigDecimal.valueOf(1400.00))
+											.build();
 
-		orderEntity.addLog(LocalDateTime.now(), OrderStatus.REQUESTED);
+		OrderLogEntity log = OrderLogEntity.builder()
+											.withStatus(OrderStatus.COMPLETED)
+											.withDatetime(LocalDateTime.now())
+											.build();
 
-		OrderItemEntity item = new OrderItemEntity();
-		item.setProductId(UUID.randomUUID());
-		item.setQuantity(10);
-		item.setAmount(BigDecimal.TEN);
+		orderEntity.addLog(log);
+
+		OrderItemEntity item = OrderItemEntity.builder()
+											.withProductId(UUID.randomUUID())
+											.withQuantity(1)
+											.withAmount(BigDecimal.TEN)
+											.build();
 
 		orderEntity.addItem(item);
 
-		orderEntity.addPaymentMethod(PaymentType.CREDIT_CARD, BigDecimal.TEN);
+		PaymentMethodEntity paymentMethod = PaymentMethodEntity.builder()
+															.withPaymentType(PaymentType.CASH.getDescription())
+															.withAmount(BigDecimal.TEN)
+															.build();
+
+		orderEntity.addPaymentMethod(paymentMethod);
 
 		OrderEntity savedOrder = this.repository.save(orderEntity);
 		assertThat(savedOrder).isNotNull();

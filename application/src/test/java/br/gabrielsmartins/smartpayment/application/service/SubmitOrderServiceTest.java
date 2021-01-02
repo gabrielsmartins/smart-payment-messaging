@@ -13,17 +13,17 @@ import org.junit.jupiter.api.Test;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
-import br.gabrielsmartins.smartpayment.application.ports.in.SendOrderUseCase;
+import br.gabrielsmartins.smartpayment.application.ports.in.SendNotificationOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 
 public class SubmitOrderServiceTest {
 	
 	private SubmitOrderService service;
-	private SendOrderUseCase useCase;
+	private SendNotificationOrderUseCase useCase;
 	
 	@BeforeEach
 	public void setup() {
-		this.useCase = mock(SendOrderUseCase.class);
+		this.useCase = mock(SendNotificationOrderUseCase.class);
 		this.service = new SubmitOrderService(useCase);
 	}
 	

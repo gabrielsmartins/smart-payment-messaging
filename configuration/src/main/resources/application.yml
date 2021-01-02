@@ -45,5 +45,5 @@ topic:
     order-status-updated: order-status-updated
 
 endpoint:
-  orders:
+  notifications:
     url: http://localhost:8081/orders

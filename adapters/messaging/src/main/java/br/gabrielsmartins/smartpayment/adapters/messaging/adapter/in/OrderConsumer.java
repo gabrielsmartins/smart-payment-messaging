@@ -2,7 +2,7 @@ package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in;
 
 
 import br.gabrielsmartins.schemas.new_order.NewOrder;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingMapper;
+import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingInputMapper;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
@@ -22,7 +22,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 public class OrderConsumer {
 
     private final SubmitOrderUseCase useCase;
-    private final OrderMessagingMapper mapper;
+    private final OrderMessagingInputMapper mapper;
 
     @KafkaHandler
     public void consume(@Headers MessageHeaders headers,  @Payload NewOrder message){
