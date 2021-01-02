@@ -1,6 +1,6 @@
 language: java
 jdk: openjdk11
-install: skip
+install: true
 
 before_install:
   - chmod +x gradlew
@@ -14,13 +14,13 @@ jobs:
   include:
     - stage: "compile"
       name: " Compile"
-      script: ./gradlew compileTestJava
+      script: ./gradlew compileTestJava --scan --no-daemon
     - stage: "test"
       name: " Tests"
-      script: ./gradlew test
+      script: ./gradlew test --scan --no-daemon
     - stage: "build"
       name: "Build"
-      script: ./gradlew assemble
+      script: ./gradlew assemble --scan --no-daemon
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
