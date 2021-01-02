@@ -1,14 +1,15 @@
 package br.gabrielsmartins.smartpayment.application.domain.state;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.observers.OrderStateObservable;
 import br.gabrielsmartins.smartpayment.application.domain.state.observers.OrderStateObserver;
 import br.gabrielsmartins.smartpayment.application.domain.state.observers.OrderStateObserverFactory;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 public abstract class OrderState implements OrderStateObservable {
@@ -20,6 +21,12 @@ public abstract class OrderState implements OrderStateObservable {
         this.order = order;
         this.order.setState(this);
         this.order.setStatus(this.getStatus());
+
+        OrderLog log = new OrderLog();
+        log.setStatus(this.order.getStatus());
+        log.setDatetime(LocalDateTime.now());
+
+        this.order.addLog(log);
         OrderStateObserverFactory factory = OrderStateObserverFactory.getInstance();
 		List<OrderStateObserver> observers = factory.getObservers();
 		observers.forEach(this::register);
