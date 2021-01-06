@@ -10,10 +10,12 @@ apply from: "$rootDir/repositories.gradle", to: buildscript
 buildscript {
     apply from: "$rootDir/repositories.gradle", to: buildscript
     ext {
+        springBootPluginVersion = '2.3.4.RELEASE'
         springBootDependencyManagementPluginVersion = '1.0.9.RELEASE'
         avroPluginVersion = '0.22.0'
     }
     dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: springBootPluginVersion
         classpath group: 'io.spring.gradle', name: 'dependency-management-plugin', version: springBootDependencyManagementPluginVersion
         classpath group: 'com.commercehub.gradle.plugin', name: 'gradle-avro-plugin', version: avroPluginVersion
     }

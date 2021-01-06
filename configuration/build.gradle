@@ -1,6 +1,4 @@
-plugins {
-    id "org.springframework.boot" version "2.3.4.RELEASE"
-}
+apply plugin: "org.springframework.boot"
 
 dependencies {
     implementation project(':common')
@@ -14,4 +12,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-devtools'
 
     testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+bootJar{
+    destinationDirectory = file(rootProject.buildDir)
+    archiveFileName = rootProject.name + ".jar"
 }
