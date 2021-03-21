@@ -15,6 +15,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,11 +66,13 @@ public class OrderConsumerTest  {
     @Autowired
     private TopicProperties topicProperties;
 
+    private AutoCloseable closeable;
+
     private String topic;
 
     @BeforeEach
     public void setup(){
-        MockitoAnnotations.initMocks(this);
+        this.closeable = MockitoAnnotations.openMocks(this);
         this.topic = this.topicProperties.getInputTopic(TopicProperties.ORDER_REQUESTED);
     }
 
@@ -113,5 +116,8 @@ public class OrderConsumerTest  {
         return new DefaultKafkaProducerFactory<String, SpecificRecord>(producerProps).createProducer();
     }
 
-
+    @AfterEach
+    public void releaseMocks() throws Exception {
+        closeable.close();
+    }
 }

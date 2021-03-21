@@ -5,6 +5,7 @@ import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
@@ -67,7 +68,8 @@ public class OrderStatusProducerTest {
     @DisplayName("Given Order Status Message When Send Call Template")
     public void givenOrderStatusMessageWhenSendCallTemplate(){
 
-        Order order = defaultOrder().build();
+        Order order = defaultOrder().withStatus(OrderStatus.REQUESTED)
+                                    .build();
 
         OrderLog orderLog = defaultOrderLog().build();
         order.addLog(orderLog);
