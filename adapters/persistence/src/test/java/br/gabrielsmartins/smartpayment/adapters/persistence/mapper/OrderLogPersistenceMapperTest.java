@@ -1,14 +1,13 @@
 package br.gabrielsmartins.smartpayment.adapters.persistence.mapper;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.OrderLogEntity;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderLogEntitySupport.defaultOrderLogEntity;
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderLogPersistenceMapperTest {
@@ -23,10 +22,7 @@ public class OrderLogPersistenceMapperTest {
     @Test
     @DisplayName("Given Order Log When Map Then Return Order Log Entity")
     public void givenOrderLogWhenMapThenReturnOrderLogEntity(){
-        OrderLog orderLog = OrderLog.builder()
-                                    .withStatus(OrderStatus.COMPLETED)
-                                    .withDatetime(LocalDateTime.now())
-                                     .build();
+        OrderLog orderLog = defaultOrderLog().build();
 
         OrderLogEntity orderLogEntity = this.mapper.mapToEntity(orderLog);
 
@@ -38,10 +34,7 @@ public class OrderLogPersistenceMapperTest {
     @Test
     @DisplayName("Given Order Log Entity When Map Then Return Order Log")
     public void givenOrderLogEntityWhenMapThenReturnOrderLog(){
-        OrderLogEntity orderLogEntity = OrderLogEntity.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLogEntity orderLogEntity = defaultOrderLogEntity().build();
 
         OrderLog orderLog = this.mapper.mapToDomain(orderLogEntity);
 

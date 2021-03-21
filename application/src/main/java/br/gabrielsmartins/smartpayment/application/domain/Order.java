@@ -22,7 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Order {
 
-	private String id;
+	private Long id;
 	private UUID customerId;
 	private LocalDateTime createdAt;
 	private LocalDateTime finishedAt;

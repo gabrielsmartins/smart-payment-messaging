@@ -2,13 +2,12 @@ package br.gabrielsmartins.smartpayment.adapters.persistence.mapper;
 
 import br.gabrielsmartins.smartpayment.adapters.persistence.entity.PaymentMethodEntity;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.PaymentMethodEntitySupport.defaultPaymentMethodEntity;
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PaymentMethodPersistenceMapperTest {
@@ -23,10 +22,8 @@ public class PaymentMethodPersistenceMapperTest {
     @Test
     @DisplayName("Given Payment Method When Map Then Return Payment Method Entity")
     public void givenPaymentMethodWhenMapThenReturnPaymentMethodEntity(){
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                                                   .withPaymentType(PaymentType.CASH)
-                                                    .withAmount(BigDecimal.TEN)
-                                                    .build();
+
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
 
         PaymentMethodEntity paymentMethodEntity = this.mapper.mapToEntity(paymentMethod);
 
@@ -38,10 +35,7 @@ public class PaymentMethodPersistenceMapperTest {
     @Test
     @DisplayName("Given Payment Method Entity When Map Then Return Payment Method")
     public void givenPaymentMethodEntityWhenMapThenReturnPaymentMethod(){
-        PaymentMethodEntity paymentMethodEntity = PaymentMethodEntity.builder()
-                                                .withPaymentType(PaymentType.CASH.getDescription())
-                                                .withAmount(BigDecimal.TEN)
-                                                .build();
+        PaymentMethodEntity paymentMethodEntity = defaultPaymentMethodEntity().build();
 
         PaymentMethod paymentMethod = this.mapper.mapToDomain(paymentMethodEntity);
 

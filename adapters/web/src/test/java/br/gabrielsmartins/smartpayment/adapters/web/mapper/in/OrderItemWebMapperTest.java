@@ -6,9 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
+import static br.gabrielsmartins.smartpayment.adapters.web.support.OrderItemDTOSupport.defaultOrderItemDto;
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderItemWebMapperTest {
@@ -24,11 +23,7 @@ public class OrderItemWebMapperTest {
     @DisplayName("Given Order Item When Map Then Return Order Item Dto")
     public void givenOrderItemWhenMapThenReturnOrderItemDto(){
 
-        OrderItem item = OrderItem.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        OrderItem item = defaultOrderItem().build();
 
         OrderItemDTO itemDTO = this.mapper.mapToDto(item);
 
@@ -42,11 +37,7 @@ public class OrderItemWebMapperTest {
     @DisplayName("Given Order Item Dto When Map Then Return Order Item")
     public void givenOrderItemDtoWhenMapThenReturnOrderItem(){
 
-        OrderItemDTO itemDTO = OrderItemDTO.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        OrderItemDTO itemDTO = defaultOrderItemDto().build();
 
         OrderItem item = this.mapper.mapToDomain(itemDTO);
 

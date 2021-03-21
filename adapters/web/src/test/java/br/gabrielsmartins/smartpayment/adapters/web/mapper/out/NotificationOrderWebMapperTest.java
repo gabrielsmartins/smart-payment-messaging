@@ -4,17 +4,17 @@ import br.gabrielsmartins.smartpayment.adapters.web.adapter.out.dto.Notification
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
+import static br.gabrielsmartins.smartpayment.application.support.OrderSupport.defaultOrder;
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NotificationOrderWebMapperTest {
@@ -32,20 +32,9 @@ public class NotificationOrderWebMapperTest {
     @DisplayName("given Order When Map Then Return Notification Dto")
     public void givenOrderWhenMapThenReturnNotificationDto(){
 
-        Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID())
-                .withCreatedAt(LocalDateTime.now())
-                .withFinishedAt(LocalDateTime.now())
-                .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(BigDecimal.valueOf(1500.00))
-                .withTotalDiscount(BigDecimal.valueOf(1400.00))
-                .build();
+        Order order = defaultOrder().build();
 
-        OrderLog orderLog = OrderLog.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLog orderLog = defaultOrderLog().build();
 
         order.addLog(orderLog);
 
@@ -56,10 +45,7 @@ public class NotificationOrderWebMapperTest {
 
         order.addItem(item);
 
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                .withPaymentType(PaymentType.CASH)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
 
         order.addPaymentMethod(paymentMethod);
 

@@ -17,7 +17,7 @@ import java.util.*;
 public class NotificationOrderDTO {
 
     @JsonProperty(value = "id", access = JsonProperty.Access.WRITE_ONLY)
-    private String id;
+    private Long id;
 
     @JsonProperty("cusomter_id")
     private UUID customerId;

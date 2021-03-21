@@ -21,7 +21,7 @@ import java.util.UUID;
 public class OrderDTO {
 
     @JsonProperty(value = "id", access = JsonProperty.Access.READ_ONLY)
-    private String id;
+    private Long id;
 
     @JsonProperty("customer_id")
     private UUID customerId;

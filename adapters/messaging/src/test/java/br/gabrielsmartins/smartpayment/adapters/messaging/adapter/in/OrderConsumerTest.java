@@ -1,11 +1,11 @@
 package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in;
 
-import br.gabrielsmartins.schemas.new_order.Item;
-import br.gabrielsmartins.schemas.new_order.NewOrder;
-import br.gabrielsmartins.schemas.new_order.PaymentMethod;
-import br.gabrielsmartins.schemas.new_order.PaymentType;
+import br.gabrielsmartins.schemas.order_requested.Item;
+import br.gabrielsmartins.schemas.order_requested.OrderRequested;
+import br.gabrielsmartins.schemas.order_requested.PaymentMethod;
+import br.gabrielsmartins.schemas.order_requested.PaymentType;
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.mapper.OrderMessagingConsumerMapper;
 import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingInputMapper;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @EmbeddedKafka(partitions = 1, controlledShutdown = true)
 @ActiveProfiles("test")
-public class OrderConsumerTest {
+public class OrderConsumerTest  {
 
     @Autowired
     private EmbeddedKafkaBroker embeddedKafkaBroker;
@@ -60,7 +60,7 @@ public class OrderConsumerTest {
     private SubmitOrderUseCase useCase;
 
     @SpyBean
-    private OrderMessagingInputMapper mapper;
+    private OrderMessagingConsumerMapper mapper;
 
     @Autowired
     private TopicProperties topicProperties;
@@ -77,7 +77,7 @@ public class OrderConsumerTest {
     @DisplayName("Given Message When Receive Then Submit Order")
     public void givenMessageWhenReceiveThenSubmitOrder(){
 
-        var message = NewOrder.newBuilder()
+        var message = OrderRequested.newBuilder()
                 .setCreatedAt(LocalDateTime.now())
                 .setCustomerId(UUID.randomUUID().toString())
                 .setTotalAmount(BigDecimal.valueOf(1500.00))
@@ -94,8 +94,6 @@ public class OrderConsumerTest {
                 .build();
 
         Producer<String, SpecificRecord> producer = createProducer();
-
-
 
         producer.send(new ProducerRecord<>(topic, UUID.randomUUID().toString(), message));
         producer.flush();
@@ -114,5 +112,6 @@ public class OrderConsumerTest {
         producerProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "mock://http://localhost:8081");
         return new DefaultKafkaProducerFactory<String, SpecificRecord>(producerProps).createProducer();
     }
+
 
 }

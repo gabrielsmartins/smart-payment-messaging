@@ -6,9 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderItemEntitySupport.defaultOrderItemEntity;
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderItemPersistenceMapperTest {
@@ -23,11 +22,7 @@ public class OrderItemPersistenceMapperTest {
     @Test
     @DisplayName("Given Order Item When Map Then Return Order Item Entity")
     public void givenOrderItemWhenMapThenReturnOrderItemEntity(){
-        OrderItem orderItem = OrderItem.builder()
-                                        .withProductId(UUID.randomUUID())
-                                        .withQuantity(1)
-                                        .withAmount(BigDecimal.TEN)
-                                        .build();
+        OrderItem orderItem = defaultOrderItem().build();
 
         OrderItemEntity orderItemEntity = this.mapper.mapToEntity(orderItem);
 
@@ -40,11 +35,8 @@ public class OrderItemPersistenceMapperTest {
     @Test
     @DisplayName("Given Order Item Entity When Map Then Return Order Item")
     public void givenOrderItemEntityWhenMapThenReturnOrderItem(){
-        OrderItemEntity orderItemEntity = OrderItemEntity.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+
+        OrderItemEntity orderItemEntity = defaultOrderItemEntity().build();
 
         OrderItem orderItem = this.mapper.mapToDomain(orderItemEntity);
 

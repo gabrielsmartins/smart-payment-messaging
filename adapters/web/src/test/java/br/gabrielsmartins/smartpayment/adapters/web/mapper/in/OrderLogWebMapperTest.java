@@ -1,14 +1,13 @@
 package br.gabrielsmartins.smartpayment.adapters.web.mapper.in;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.in.dto.OrderLogDTO;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
+import static br.gabrielsmartins.smartpayment.adapters.web.support.OrderLogDTOSupport.defaultOrderLogDto;
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderLogWebMapperTest {
@@ -24,10 +23,7 @@ public class OrderLogWebMapperTest {
     @DisplayName("Given Order Log When Map Then Return Order Log Dto")
     public void givenOrderLogWhenMapThenReturnOrderLogDto(){
 
-        OrderLog orderLog = OrderLog.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLog orderLog = defaultOrderLog().build();
 
         OrderLogDTO orderLogDTO = this.mapper.mapToDto(orderLog);
 
@@ -40,10 +36,7 @@ public class OrderLogWebMapperTest {
     @DisplayName("Given Order Log Dto When Map Then Return Order Log")
     public void givenOrderLogDtoWhenMapThenReturnOrderLog(){
 
-        OrderLogDTO orderLogDTO = OrderLogDTO.builder()
-                .withStatus(OrderStatus.COMPLETED.getDescription())
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLogDTO orderLogDTO = defaultOrderLogDto().build();
 
         OrderLog orderLog = this.mapper.mapToDomain(orderLogDTO);
 

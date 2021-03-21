@@ -1,8 +1,8 @@
 package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in;
 
 
-import br.gabrielsmartins.schemas.new_order.NewOrder;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.in.OrderMessagingInputMapper;
+import br.gabrielsmartins.schemas.order_requested.OrderRequested;
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.mapper.OrderMessagingConsumerMapper;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
@@ -22,10 +22,10 @@ import org.springframework.messaging.handler.annotation.Payload;
 public class OrderConsumer {
 
     private final SubmitOrderUseCase useCase;
-    private final OrderMessagingInputMapper mapper;
+    private final OrderMessagingConsumerMapper mapper;
 
     @KafkaHandler
-    public void consume(@Headers MessageHeaders headers,  @Payload NewOrder message){
+    public void consume(@Headers MessageHeaders headers,  @Payload OrderRequested message){
         log.info("Receiving new order: {},{}", headers, message);
         Order order = this.mapper.mapToDomain(message);
         var command = new SubmitOrderCommand(order);

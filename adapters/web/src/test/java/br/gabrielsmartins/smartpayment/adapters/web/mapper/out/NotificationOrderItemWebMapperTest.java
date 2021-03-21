@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NotificationOrderItemWebMapperTest {
@@ -24,11 +22,7 @@ public class NotificationOrderItemWebMapperTest {
     @DisplayName("Given Order Item When Map Then Return Notification Dto")
     public void givenOrderItemWhenMapThenReturnNotificationDto(){
 
-        OrderItem item = OrderItem.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        OrderItem item = defaultOrderItem().build();
 
         NotificationOrderItemDTO itemDto = this.mapper.mapToDto(item);
 

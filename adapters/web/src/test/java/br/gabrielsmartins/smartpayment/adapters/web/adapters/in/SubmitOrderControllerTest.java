@@ -9,8 +9,6 @@ import br.gabrielsmartins.smartpayment.adapters.web.mapper.in.PaymentMethodWebMa
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
@@ -26,10 +24,11 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import static br.gabrielsmartins.smartpayment.adapters.web.support.OrderDTOSupport.defaultOrderDto;
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
+import static br.gabrielsmartins.smartpayment.application.support.OrderSupport.defaultOrder;
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -62,48 +61,21 @@ public class SubmitOrderControllerTest {
     @DisplayName("Given Order When Accept Then Return Saved Order")
     public void givenOrderWhenAcceptThenReturnSavedOrder() throws Exception {
 
-        OrderDTO orderDTO = OrderDTO.builder()
-                                    .withId(UUID.randomUUID().toString())
-                                    .withCustomerId(UUID.randomUUID())
-                                    .withCreatedAt(LocalDateTime.now())
-                                    .withFinishedAt(LocalDateTime.now())
-                                    .withStatus(OrderStatus.COMPLETED.getDescription())
-                                    .withTotalAmount(BigDecimal.valueOf(1500.00))
-                                    .withTotalDiscount(BigDecimal.valueOf(1400.00))
-                                    .build();
+        OrderDTO orderDTO = defaultOrderDto().build();
 
         String content = this.mapper.writeValueAsString(orderDTO);
 
+        Order order = defaultOrder().build();
 
-        Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID())
-                .withCreatedAt(LocalDateTime.now())
-                .withFinishedAt(LocalDateTime.now())
-                .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(BigDecimal.valueOf(1500.00))
-                .withTotalDiscount(BigDecimal.valueOf(1400.00))
-                .build();
-
-        OrderLog orderLog = OrderLog.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLog orderLog = defaultOrderLog().build();
 
         order.addLog(orderLog);
 
-        OrderItem item = OrderItem.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        OrderItem item = defaultOrderItem().build();
 
         order.addItem(item);
 
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                .withPaymentType(PaymentType.CASH)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
 
         order.addPaymentMethod(paymentMethod);
 

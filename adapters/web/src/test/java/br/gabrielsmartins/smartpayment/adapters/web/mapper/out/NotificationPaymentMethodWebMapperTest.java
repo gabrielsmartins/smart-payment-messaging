@@ -2,13 +2,11 @@ package br.gabrielsmartins.smartpayment.adapters.web.mapper.out;
 
 import br.gabrielsmartins.smartpayment.adapters.web.adapter.out.dto.NotificationPaymentMethodDTO;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NotificationPaymentMethodWebMapperTest {
@@ -23,10 +21,7 @@ public class NotificationPaymentMethodWebMapperTest {
     @Test
     @DisplayName("Given Payment Method When Map Then Return Notification Payment Method Dto")
     public void givenPaymentMethodWhenMapThenReturnNotificationPaymentMethodDto(){
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                                                    .withPaymentType(PaymentType.CASH)
-                                                    .withAmount(BigDecimal.TEN)
-                                                    .build();
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
 
         NotificationPaymentMethodDTO paymentMethodDTO = this.mapper.mapToDto(paymentMethod);
 

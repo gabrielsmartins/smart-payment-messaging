@@ -5,8 +5,6 @@ import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
@@ -31,12 +29,13 @@ import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
-import java.util.UUID;
 
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
+import static br.gabrielsmartins.smartpayment.application.support.OrderSupport.defaultOrder;
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -68,35 +67,15 @@ public class OrderStatusProducerTest {
     @DisplayName("Given Order Status Message When Send Call Template")
     public void givenOrderStatusMessageWhenSendCallTemplate(){
 
-        Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID())
-                .withCreatedAt(LocalDateTime.now())
-                .withFinishedAt(LocalDateTime.now())
-                .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(BigDecimal.valueOf(1500.00))
-                .withTotalDiscount(BigDecimal.valueOf(1400.00))
-                .build();
+        Order order = defaultOrder().build();
 
-        OrderLog orderLog = OrderLog.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
-
+        OrderLog orderLog = defaultOrderLog().build();
         order.addLog(orderLog);
 
-        OrderItem item = new OrderItem();
-        item.setProductId(UUID.randomUUID());
-        item.setQuantity(10);
-        item.setAmount(BigDecimal.TEN);
-
+        OrderItem item = defaultOrderItem().build();
         order.addItem(item);
 
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                .withPaymentType(PaymentType.CASH)
-                .withAmount(BigDecimal.TEN)
-                .build();
-
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
         order.addPaymentMethod(paymentMethod);
 
         producer.send(order);
@@ -106,7 +85,7 @@ public class OrderStatusProducerTest {
         ConsumerRecord<String, SpecificRecord> singleRecord = KafkaTestUtils.getSingleRecord(consumer, topic);
 
         assertThat(singleRecord).isNotNull();
-        assertThat(singleRecord.key()).isEqualTo(order.getId());
+        assertThat(singleRecord.key()).isEqualTo(order.getId().toString());
         assertThat(singleRecord.value()).isNotNull();
     }
 

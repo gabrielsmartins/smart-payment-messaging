@@ -27,7 +27,7 @@ public class OrderEntity {
 
     @Id
     @Field("order_id")
-    private String id;
+    private Long id;
 
     @Field("customer_id")
     private UUID customerId;

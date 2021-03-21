@@ -1,8 +1,8 @@
 package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.out;
 
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.out.mapper.factory.OrderStatusMessagingProducerMapper;
 import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.out.factory.OrderStatusMessagingOutputMapper;
-import br.gabrielsmartins.smartpayment.adapters.messaging.mapper.out.factory.OrderStatusMapperMessagingOutputFactory;
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.out.mapper.factory.OrderStatusMapperMessagingProducerFactory;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.ports.out.SendOrderStatusPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.MessagingAdapter;
@@ -18,14 +18,14 @@ public class OrderStatusProducer implements SendOrderStatusPort {
 
     private final KafkaTemplate<String, SpecificRecord> template;
     private final TopicProperties topicProperties;
-    private final OrderStatusMapperMessagingOutputFactory factory;
+    private final OrderStatusMapperMessagingProducerFactory factory;
 
     @Override
     public void send(Order order) {
-        OrderStatusMessagingOutputMapper<?> mapper = factory.createMapper(order.getStatus());
+        OrderStatusMessagingProducerMapper<?> mapper = factory.createMapper(order.getStatus());
         SpecificRecord message = mapper.mapToMessage(order);
         String topic = topicProperties.getOutputTopic(TopicProperties.ORDER_STATUS_UPDATED);
         log.info("Sending message: {}", message);
-        template.send(topic, order.getId(), message);
+        template.send(topic, String.valueOf(order.getId()), message);
     }
 }

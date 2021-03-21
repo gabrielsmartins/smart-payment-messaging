@@ -10,8 +10,8 @@ apply from: "$rootDir/repositories.gradle", to: buildscript
 buildscript {
     apply from: "$rootDir/repositories.gradle", to: buildscript
     ext {
-        springBootPluginVersion = '2.3.4.RELEASE'
-        springBootDependencyManagementPluginVersion = '1.0.9.RELEASE'
+        springBootPluginVersion = '2.4.3'
+        springBootDependencyManagementPluginVersion = '1.0.11.RELEASE'
         avroPluginVersion = '0.22.0'
     }
     dependencies {
@@ -39,8 +39,8 @@ subprojects {
     version = '0.0.1-SNAPSHOT'
 
     ext {
-        springBootVersion = '2.3.4.RELEASE'
-        springCloudVersion = 'Hoxton.SR8'
+        springBootVersion = '2.4.2'
+        springCloudVersion = '2020.0.1'
         lombokVersion = '1.18.12'
         junitVersion = '5.6.2'
         junitPlatformVersion = '1.6.2'
@@ -73,17 +73,19 @@ subprojects {
         implementation group: 'org.mapstruct', name: 'mapstruct', version: mapStructVersion
         annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: mapStructVersion
 
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
         implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-        implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+        implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
 
         implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: logstashVersion
 
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-        }
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'io.projectreactor:reactor-test'
     }
 
     dependencyManagement {

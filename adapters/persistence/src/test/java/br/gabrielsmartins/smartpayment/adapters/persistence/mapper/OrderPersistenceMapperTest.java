@@ -7,17 +7,19 @@ import br.gabrielsmartins.smartpayment.adapters.persistence.entity.PaymentMethod
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderEntitySupport.defaultOrderEntity;
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderItemEntitySupport.defaultOrderItemEntity;
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderLogEntitySupport.defaultOrderLogEntity;
+import static br.gabrielsmartins.smartpayment.adapters.persistence.support.PaymentMethodEntitySupport.defaultPaymentMethodEntity;
+import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
+import static br.gabrielsmartins.smartpayment.application.support.OrderLogSupport.defaultOrderLog;
+import static br.gabrielsmartins.smartpayment.application.support.OrderSupport.defaultOrder;
+import static br.gabrielsmartins.smartpayment.application.support.PaymentMethodSupport.defaultPaymentMethod;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderPersistenceMapperTest {
@@ -36,35 +38,17 @@ public class OrderPersistenceMapperTest {
     @DisplayName("Given Order Entity When Map Then Return Order Domain")
     public void givenOrderEntityWhenMapThenReturnOrderDomain(){
 
-    	Order order = Order.builder()
-                .withId(UUID.randomUUID().toString())
-                .withCustomerId(UUID.randomUUID())
-                .withCreatedAt(LocalDateTime.now())
-                .withFinishedAt(LocalDateTime.now())
-                .withStatus(OrderStatus.COMPLETED)
-                .withTotalAmount(BigDecimal.valueOf(1500.00))
-                .withTotalDiscount(BigDecimal.valueOf(1400.00))
-                .build();
+    	Order order = defaultOrder().build();
 
-        OrderLog orderLog = OrderLog.builder()
-                .withStatus(OrderStatus.COMPLETED)
-                .withDatetime(LocalDateTime.now())
-                .build();
+        OrderLog orderLog = defaultOrderLog().build();
 
     	order.addLog(orderLog);
 
-        OrderItem orderItem = OrderItem.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        OrderItem orderItem = defaultOrderItem().build();
 
     	order.addItem(orderItem);
 
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                .withPaymentType(PaymentType.CASH)
-                .withAmount(BigDecimal.TEN)
-                .build();
+        PaymentMethod paymentMethod = defaultPaymentMethod().build();
 
         order.addPaymentMethod(paymentMethod);
 
@@ -87,43 +71,19 @@ public class OrderPersistenceMapperTest {
     @DisplayName("Given Order Domain When Map Then Return Order Entity")
     public void givenOrderDomainWhenMapThenReturnOrderEntity(){
 
+    	OrderEntity orderEntity = defaultOrderEntity().build();
 
-    	OrderEntity orderEntity = OrderEntity.builder()
-						                .withId(UUID.randomUUID().toString())
-						                .withCustomerId(UUID.randomUUID())
-						                .withCreatedAt(LocalDateTime.now())
-						                .withFinishedAt(LocalDateTime.now())
-						                .withStatus(OrderStatus.COMPLETED)
-						                .withTotalAmount(BigDecimal.valueOf(1500.00))
-						                .withTotalDiscount(BigDecimal.valueOf(1400.00))
-						                .build();
-
-
-        OrderLogEntity orderLogEntity = OrderLogEntity.builder()
-                                                    .withStatus(OrderStatus.COMPLETED)
-                                                    .withDatetime(LocalDateTime.now())
-                                                    .build();
-
+        OrderLogEntity orderLogEntity = defaultOrderLogEntity().build();
 
     	orderEntity.addLog(orderLogEntity);
 
-        OrderItemEntity item = OrderItemEntity.builder()
-                .withProductId(UUID.randomUUID())
-                .withQuantity(1)
-                .withAmount(BigDecimal.TEN)
-                .build();
-
+        OrderItemEntity item = defaultOrderItemEntity().build();
 
         orderEntity.addItem(item);
 
-        PaymentMethodEntity paymentMethodEntity = PaymentMethodEntity.builder()
-                                                                .withPaymentType(PaymentType.CASH.getDescription())
-                                                                .withAmount(BigDecimal.TEN)
-                                                                .build();
-
+        PaymentMethodEntity paymentMethodEntity = defaultPaymentMethodEntity().build();
 
     	orderEntity.addPaymentMethod(paymentMethodEntity);
-
 
         Order order = this.mapper.mapToDomain(orderEntity);
 
