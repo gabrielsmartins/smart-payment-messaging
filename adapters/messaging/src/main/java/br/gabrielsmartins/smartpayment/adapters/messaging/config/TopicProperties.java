@@ -15,7 +15,7 @@ public class TopicProperties {
 
     public static final String ORDER_STATUS_UPDATED = "order-status-updated";
     public static final String ORDER_REQUESTED = "order-requested";
-    public static final String ORDER_VALIDATED = "order-validated";
+    public static final String FRAUD_ANALYZED = "fraud-analyzed";
 
     private Map<String, String> input;
     private Map<String, String> output;

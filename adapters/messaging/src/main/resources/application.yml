@@ -21,6 +21,6 @@ spring:
 topic:
   input:
     order-requested: order-requested
-    order-validated: order-validated
+    fraud-analyzed: fraud-analyzed
   output:
     order-status-updated: order-status-updated
