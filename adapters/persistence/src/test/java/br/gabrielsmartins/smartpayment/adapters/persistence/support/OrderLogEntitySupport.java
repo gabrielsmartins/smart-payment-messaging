@@ -13,7 +13,7 @@ public class OrderLogEntitySupport {
 
     public static OrderLogEntity.OrderLogEntityBuilder defaultOrderLogEntity(){
         return OrderLogEntity.builder()
-                .withStatus(OrderStatus.REQUESTED)
+                .withStatus(OrderStatus.RECEIVED)
                 .withDatetime(LocalDateTime.now());
     }
 }

@@ -22,64 +22,65 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Order {
 
-	private Long id;
-	private UUID customerId;
-	private LocalDateTime createdAt;
-	private LocalDateTime finishedAt;
-	private BigDecimal totalAmount;
-	private BigDecimal totalDiscount;
-	
-	@Builder.Default
-	private OrderStatus status = OrderStatus.NEW;
-	
-	@Builder.Default
-	private OrderState state = new NewOrderState();
+    private Long id;
+    private UUID customerId;
+    private LocalDateTime createdAt;
+    private LocalDateTime finishedAt;
+    private BigDecimal totalAmount;
+    private BigDecimal totalDiscount;
 
-	@Getter(AccessLevel.NONE)
-	private final List<OrderLog> logs = new LinkedList<>();
+    @Builder.Default
+    private OrderStatus status = OrderStatus.NEW;
 
-	@Getter(AccessLevel.NONE)
-	private final List<OrderItem> items = new LinkedList<>();
+    @Builder.Default
+    private OrderState state = new NewOrderState();
 
-	@Getter(AccessLevel.NONE)
-	private final List<PaymentMethod> paymentMethods = new LinkedList<>();
+    @Getter(AccessLevel.NONE)
+    private final List<OrderLog> logs = new LinkedList<>();
 
-	public List<OrderLog> getLogs() {
-		return Collections.unmodifiableList(logs);
-	}
+    @Getter(AccessLevel.NONE)
+    private final List<OrderItem> items = new LinkedList<>();
 
-	public List<OrderItem> getItems() {
-		return Collections.unmodifiableList(items);
-	}
+    @Getter(AccessLevel.NONE)
+    private final List<PaymentMethod> paymentMethods = new LinkedList<>();
 
-	public List<PaymentMethod> getPaymentMethods() {
-		return Collections.unmodifiableList(paymentMethods);
-	}
+    public List<OrderLog> getLogs() {
+        return Collections.unmodifiableList(logs);
+    }
 
-	public Integer addLog(OrderLog log) {
-		log.setOrder(this);
-		this.logs.add(log);
-		return this.logs.size();
-	}
-	
-	public Integer addItem(OrderItem item) {
-		item.setOrder(this);
-		this.items.add(item);
-		return this.items.size();
-	}
-	
-	public Integer addPaymentMethod(PaymentMethod paymentMethod) {
-		paymentMethod.setOrder(this);
-		this.paymentMethods.add(paymentMethod);
-		return this.paymentMethods.size();
-	}
+    public List<OrderItem> getItems() {
+        return Collections.unmodifiableList(items);
+    }
 
-	public OrderState next() {
-		 return this.state.next(this);
-	}
+    public List<PaymentMethod> getPaymentMethods() {
+        return Collections.unmodifiableList(paymentMethods);
+    }
 
+    public Integer addLog(OrderLog log) {
+        log.setOrder(this);
+        this.logs.add(log);
+        return this.logs.size();
+    }
 
+    public Integer addItem(OrderItem item) {
+        item.setOrder(this);
+        this.items.add(item);
+        return this.items.size();
+    }
 
+    public Integer addPaymentMethod(PaymentMethod paymentMethod) {
+        paymentMethod.setOrder(this);
+        this.paymentMethods.add(paymentMethod);
+        return this.paymentMethods.size();
+    }
+
+    public OrderState reject() {
+        return this.state.reject(this);
+    }
+
+    public OrderState next() {
+        return this.state.next(this);
+    }
 
 
 }

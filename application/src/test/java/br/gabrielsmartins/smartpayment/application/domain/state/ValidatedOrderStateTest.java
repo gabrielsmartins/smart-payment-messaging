@@ -18,12 +18,19 @@ public class ValidatedOrderStateTest {
 		this.order = new Order();
 		this.state = new ValidatedOrderState(order);
 	}
-	
+
+	@Test
+	@DisplayName("Given State When Reject Method Is Called Then Return Rejected State")
+	public void givenStateWhenRejectMethodIsCalledThenReturnRejectedState() {
+		OrderState state = this.state.reject(order);
+		assertThat(state).isInstanceOf(RejectedOrderState.class);
+	}
+
 	@Test
 	@DisplayName("Given State When Next Method Is Called Then Return Completed State")
 	public void givenStateWhenNextMethodIsCalledThenReturnValidatedState() {
-		OrderState confirmedState = this.state.next(order);
-		assertThat(confirmedState).isInstanceOf(CompletedOrderState.class);
+		OrderState state = this.state.next(order);
+		assertThat(state).isInstanceOf(CompletedOrderState.class);
 	}
 	
 	@Test

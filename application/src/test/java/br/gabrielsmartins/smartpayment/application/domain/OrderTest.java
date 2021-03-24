@@ -4,7 +4,7 @@ package br.gabrielsmartins.smartpayment.application.domain;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.enums.PaymentType;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
-import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
+import br.gabrielsmartins.smartpayment.application.domain.state.ReceivedOrderState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -71,7 +71,7 @@ public class OrderTest {
 	public void givenOrderWhenChangeStateThenChangeStatus() {
 		Order order = new Order();
 		order.next();
-		assertThat(order.getStatus()).isEqualTo(OrderStatus.REQUESTED);
-		assertThat(order.getState()).isInstanceOf(RequestedOrderState.class);
+		assertThat(order.getStatus()).isEqualTo(OrderStatus.RECEIVED);
+		assertThat(order.getState()).isInstanceOf(ReceivedOrderState.class);
 	}
 }

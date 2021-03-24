@@ -16,6 +16,11 @@ public class CompletedOrderState extends OrderState {
     }
 
     @Override
+    public OrderState reject(Order order) {
+        throw new IllegalStateOrderException("Isn't possible to reject an order already completed");
+    }
+
+    @Override
     public OrderState next(Order order) {
         throw new IllegalStateOrderException("Order is already finished");
     }

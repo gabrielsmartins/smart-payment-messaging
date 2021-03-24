@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
+import br.gabrielsmartins.smartpayment.application.domain.state.ReceivedOrderState;
 import br.gabrielsmartins.smartpayment.application.ports.in.SendNotificationOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 
@@ -36,8 +36,8 @@ public class SubmitOrderServiceTest {
 		this.service.submit(command);
 		
 		verify(useCase, times(1)).send(any(Order.class));
-		assertThat(order.getStatus()).isEqualTo(OrderStatus.REQUESTED);
-		assertThat(order.getState()).isInstanceOf(RequestedOrderState.class);
+		assertThat(order.getStatus()).isEqualTo(OrderStatus.RECEIVED);
+		assertThat(order.getState()).isInstanceOf(ReceivedOrderState.class);
 	}
 
 }

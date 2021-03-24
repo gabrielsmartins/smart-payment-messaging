@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum OrderStatus {
 
     NEW("NEW"),
-    REQUESTED("REQUESTED"),
+    RECEIVED("RECEIVED"),
     VALIDATED("VALIDATED"),
     REJECTED("REJECTED"),
     CONFIRMED("CONFIRMED"),

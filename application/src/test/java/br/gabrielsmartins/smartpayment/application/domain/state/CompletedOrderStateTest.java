@@ -1,15 +1,14 @@
 package br.gabrielsmartins.smartpayment.application.domain.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import br.gabrielsmartins.smartpayment.application.domain.Order;
+import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
+import br.gabrielsmartins.smartpayment.application.exception.IllegalStateOrderException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
-import br.gabrielsmartins.smartpayment.application.exception.IllegalStateOrderException;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CompletedOrderStateTest {
 	
@@ -21,7 +20,13 @@ public class CompletedOrderStateTest {
 		this.order = new Order();
 		this.state = new CompletedOrderState(order);
 	}
-	
+
+	@Test
+	@DisplayName("Given State When Reject Method Is Called Then Throw Exception")
+	public void givenStateWhenRejectMethodIsCalledThenThrowException() {
+		assertThrows(IllegalStateOrderException.class, () -> this.state.reject(order));
+	}
+
 	@Test
 	@DisplayName("Given State When Next Method Is Called Then Throw Exception")
 	public void givenStateWhenNextMethodIsCalledThenThrowException() {

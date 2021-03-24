@@ -68,7 +68,7 @@ public class OrderStatusProducerTest {
     @DisplayName("Given Order Status Message When Send Call Template")
     public void givenOrderStatusMessageWhenSendCallTemplate(){
 
-        Order order = defaultOrder().withStatus(OrderStatus.REQUESTED)
+        Order order = defaultOrder().withStatus(OrderStatus.RECEIVED)
                                     .build();
 
         OrderLog orderLog = defaultOrderLog().build();

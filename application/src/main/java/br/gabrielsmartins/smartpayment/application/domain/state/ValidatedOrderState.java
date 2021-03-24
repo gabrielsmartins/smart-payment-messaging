@@ -20,6 +20,11 @@ public class ValidatedOrderState extends OrderState {
     }
 
     @Override
+    public OrderState reject(Order order) {
+        return new RejectedOrderState(order);
+    }
+
+    @Override
     public OrderState next(Order order) {
         return new CompletedOrderState(order);
     }

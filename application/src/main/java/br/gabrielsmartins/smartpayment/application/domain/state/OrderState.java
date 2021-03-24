@@ -38,6 +38,9 @@ public abstract class OrderState implements OrderStateObservable {
     }
 
     public abstract OrderStatus getStatus();
+
+    public abstract OrderState reject(Order order);
+
     public abstract OrderState next(Order order);
 
     @Override

@@ -43,6 +43,6 @@ public class ReceivedOrderStatusMessagingProducerMapper implements OrderStatusMe
 
     @Override
     public OrderStatus getOrderStatus() {
-        return OrderStatus.REQUESTED;
+        return OrderStatus.RECEIVED;
     }
 }

@@ -21,6 +21,11 @@ public class RejectedOrderStateTest {
 		this.state = new RejectedOrderState(order);
 	}
 
+	@Test
+	@DisplayName("Given State When Reject Method Is Called Then Throw Exception")
+	public void givenStateWhenRejectMethodIsCalledThenThrowException() {
+		assertThrows(IllegalStateOrderException.class, () -> this.state.reject(order));
+	}
 
 	@Test
 	@DisplayName("Given State When Next Method Is Called Then Throw Exception")

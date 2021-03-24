@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import br.gabrielsmartins.smartpayment.application.domain.Order;
-import br.gabrielsmartins.smartpayment.application.domain.state.RequestedOrderState;
+import br.gabrielsmartins.smartpayment.application.domain.state.ReceivedOrderState;
 import br.gabrielsmartins.smartpayment.application.ports.in.SaveOrderUseCase;
 
 public class SaveOrderObserverTest {
@@ -28,7 +28,7 @@ public class SaveOrderObserverTest {
 	@DisplayName("Given Observable When Update Then Save Order")
 	public void givenObservableWhenUpdateThenSaveOrder() {
 		Order order = new Order();
-		OrderStateObservable observable = new RequestedOrderState(order);
+		OrderStateObservable observable = new ReceivedOrderState(order);
 		this.observer.update(observable);
 		
 		verify(useCase, times(1)).save(any(Order.class));

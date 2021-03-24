@@ -62,6 +62,6 @@ public class ReceivedOrderStatusMessagingProducerMapperTest {
     @DisplayName("Given Mapper When Get Order Status Then Return Order Status Requested")
     public void givenMapperWhenGetOrderStatusThenReturnOrderStatusRequested(){
         OrderStatus orderStatus = this.mapper.getOrderStatus();
-        assertThat(orderStatus).isEqualTo(OrderStatus.REQUESTED);
+        assertThat(orderStatus).isEqualTo(OrderStatus.RECEIVED);
     }
 }

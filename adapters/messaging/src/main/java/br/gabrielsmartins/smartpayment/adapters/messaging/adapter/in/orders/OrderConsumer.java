@@ -1,8 +1,8 @@
-package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in;
+package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.orders;
 
 
 import br.gabrielsmartins.schemas.order_requested.OrderRequested;
-import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.mapper.OrderMessagingConsumerMapper;
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.orders.mapper.OrderMessagingConsumerMapper;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
