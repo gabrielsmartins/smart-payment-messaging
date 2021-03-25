@@ -3,8 +3,8 @@ package br.gabrielsmartins.smartpayment.application.ports.out;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import reactor.core.publisher.Mono;
 
-public interface SendNotificationOrderPort {
+public interface SearchOrderPort {
 
-	Mono<Void> send(Order order);
-	
+    Mono<Order> findById(Long id);
+
 }

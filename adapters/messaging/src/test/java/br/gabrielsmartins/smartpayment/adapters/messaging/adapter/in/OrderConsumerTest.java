@@ -4,9 +4,9 @@ import br.gabrielsmartins.schemas.order_requested.Item;
 import br.gabrielsmartins.schemas.order_requested.OrderRequested;
 import br.gabrielsmartins.schemas.order_requested.PaymentMethod;
 import br.gabrielsmartins.schemas.order_requested.PaymentType;
-import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.orders.OrderConsumer;
-import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.orders.mapper.OrderMessagingConsumerMapper;
+import br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.mapper.OrderMessagingConsumerMapper;
 import br.gabrielsmartins.smartpayment.adapters.messaging.config.TopicProperties;
+import br.gabrielsmartins.smartpayment.application.ports.in.ProcessFraudAnalysisUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase.SubmitOrderCommand;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
@@ -26,6 +26,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
@@ -50,6 +51,9 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @EmbeddedKafka(partitions = 1, controlledShutdown = true)
 @ActiveProfiles("test")
+@MockBeans({
+        @MockBean(ProcessFraudAnalysisUseCase.class)
+})
 public class OrderConsumerTest  {
 
     @Autowired

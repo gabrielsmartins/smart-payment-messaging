@@ -7,12 +7,12 @@ import br.gabrielsmartins.smartpayment.application.domain.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static br.gabrielsmartins.smartpayment.application.support.OrderSupport.defaultOrder;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SaveOrderPersistenceAdapterTest {
 
@@ -36,10 +36,14 @@ public class SaveOrderPersistenceAdapterTest {
 
         Order order = defaultOrder().build();
 
-        when(service.save(any(OrderEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(service.save(any(OrderEntity.class))).thenAnswer(invocation -> Mono.just(invocation.getArgument(0)));
 
-        Order savedOrder = adapter.save(order);
-        assertThat(savedOrder).isNotNull();
+        adapter.save(order)
+               .as(StepVerifier::create)
+               .expectNextCount(1)
+               .verifyComplete();
+
+       verify(service, times(1)).save(any(OrderEntity.class));
     }
 
 }

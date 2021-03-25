@@ -6,10 +6,11 @@ import javax.validation.constraints.NotNull;
 import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.common.validation.SelfValidating;
 import lombok.Getter;
+import reactor.core.publisher.Mono;
 
 public interface SubmitOrderUseCase {
 	
-	Order submit(SubmitOrderCommand command);
+	Mono<Order> submit(SubmitOrderCommand command);
 	
 	@Getter
 	class SubmitOrderCommand extends SelfValidating<SubmitOrderCommand>{

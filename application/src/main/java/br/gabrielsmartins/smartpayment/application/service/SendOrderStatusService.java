@@ -5,6 +5,7 @@ import br.gabrielsmartins.smartpayment.application.ports.in.SendOrderStatusUseCa
 import br.gabrielsmartins.smartpayment.application.ports.out.SendOrderStatusPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.UseCase;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @UseCase
 @RequiredArgsConstructor
@@ -13,8 +14,8 @@ public class SendOrderStatusService implements SendOrderStatusUseCase{
 	private final SendOrderStatusPort port;
 
 	@Override
-	public void send(Order order) {
-		this.port.send(order);
+	public Mono<Void> send(Order order) {
+		return this.port.send(order);
 	}
 	
 }

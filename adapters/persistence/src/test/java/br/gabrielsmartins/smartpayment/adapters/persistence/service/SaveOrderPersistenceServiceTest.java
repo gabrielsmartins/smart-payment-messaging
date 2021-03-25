@@ -8,12 +8,13 @@ import br.gabrielsmartins.smartpayment.adapters.persistence.repository.OrderRepo
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderEntitySupport.defaultOrderEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderItemEntitySupport.defaultOrderItemEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderLogEntitySupport.defaultOrderLogEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.PaymentMethodEntitySupport.defaultPaymentMethodEntity;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -46,9 +47,11 @@ public class SaveOrderPersistenceServiceTest {
 
 		orderEntity.addPaymentMethod(paymentMethod);
 
-        when(repository.save(any(OrderEntity.class))).then(invocation -> invocation.getArgument(0));
+        when(repository.save(any(OrderEntity.class))).then(invocation -> Mono.just(invocation.getArgument(0)));
 
-        OrderEntity savedOrder = this.service.save(orderEntity);
-        assertThat(savedOrder).isNotNull();
+        this.service.save(orderEntity)
+                    .as(StepVerifier::create)
+                    .expectNextCount(1)
+                    .verifyComplete();
     }
 }

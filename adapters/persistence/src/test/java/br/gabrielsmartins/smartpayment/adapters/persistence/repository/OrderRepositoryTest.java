@@ -13,12 +13,12 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.test.StepVerifier;
 
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderEntitySupport.defaultOrderEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderItemEntitySupport.defaultOrderItemEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.OrderLogEntitySupport.defaultOrderLogEntity;
 import static br.gabrielsmartins.smartpayment.adapters.persistence.support.PaymentMethodEntitySupport.defaultPaymentMethodEntity;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
@@ -47,7 +47,9 @@ public class OrderRepositoryTest {
 
 		orderEntity.addPaymentMethod(paymentMethod);
 
-		OrderEntity savedOrder = this.repository.save(orderEntity);
-		assertThat(savedOrder).isNotNull();
+		this.repository.save(orderEntity)
+				       .as(StepVerifier::create)
+				       .expectNextCount(1)
+				       .verifyComplete();
 	}
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.core.KafkaTemplate;
+import reactor.core.publisher.Mono;
 
 @MessagingAdapter
 @RequiredArgsConstructor
@@ -21,11 +22,13 @@ public class OrderStatusProducer implements SendOrderStatusPort {
     private final OrderStatusMapperMessagingProducerFactory factory;
 
     @Override
-    public void send(Order order) {
+    public Mono<Void> send(Order order) {
         OrderStatusMessagingProducerMapper<?> mapper = factory.createMapper(order.getStatus());
         SpecificRecord message = mapper.mapToMessage(order);
         String topic = topicProperties.getOutputTopic(TopicProperties.ORDER_STATUS_UPDATED);
         log.info("Sending message: {}", message);
         template.send(topic, String.valueOf(order.getId()), message);
+        return Mono.empty().then();
     }
+
 }

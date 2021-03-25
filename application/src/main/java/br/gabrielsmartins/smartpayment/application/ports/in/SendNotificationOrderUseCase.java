@@ -1,9 +1,10 @@
 package br.gabrielsmartins.smartpayment.application.ports.in;
 
 import br.gabrielsmartins.smartpayment.application.domain.Order;
+import reactor.core.publisher.Mono;
 
 public interface SendNotificationOrderUseCase {
 
-	void send(Order order);
+	Mono<Void> send(Order order);
 	
 }

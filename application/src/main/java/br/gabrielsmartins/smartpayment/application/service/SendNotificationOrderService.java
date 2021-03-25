@@ -6,6 +6,7 @@ import br.gabrielsmartins.smartpayment.application.ports.out.SendNotificationOrd
 import br.gabrielsmartins.smartpayment.common.stereotype.UseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @UseCase
 @RequiredArgsConstructor
@@ -15,12 +16,8 @@ public class SendNotificationOrderService implements SendNotificationOrderUseCas
 	private final SendNotificationOrderPort port;
 
 	@Override
-	public void send(Order order) {
-		try{
-			this.port.send(order);
-		}catch (Exception e){
-	        log.error("Error sending order: ", e);
-		}
+	public Mono<Void> send(Order order) {
+		return this.port.send(order);
 	}
 
 }

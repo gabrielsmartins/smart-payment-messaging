@@ -23,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
+import reactor.core.publisher.Mono;
 
 import static br.gabrielsmartins.smartpayment.adapters.web.support.OrderDTOSupport.defaultOrderDto;
 import static br.gabrielsmartins.smartpayment.application.support.OrderItemSupport.defaultOrderItem;
@@ -79,7 +80,7 @@ public class SubmitOrderControllerTest {
 
         order.addPaymentMethod(paymentMethod);
 
-        when(useCase.submit(any(SubmitOrderCommand.class))).thenReturn(order);
+        when(useCase.submit(any(SubmitOrderCommand.class))).thenReturn(Mono.just(order));
 
         mockMvc.perform(post("/orders")
                                  .content(content)

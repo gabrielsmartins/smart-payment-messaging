@@ -1,4 +1,4 @@
-package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.orders.mapper;
+package br.gabrielsmartins.smartpayment.adapters.messaging.adapter.in.mapper;
 
 
 import br.gabrielsmartins.schemas.order_requested.Item;

@@ -7,6 +7,7 @@ import br.gabrielsmartins.smartpayment.application.domain.OrderItem;
 import br.gabrielsmartins.smartpayment.application.domain.PaymentMethod;
 import br.gabrielsmartins.smartpayment.application.domain.enums.OrderStatus;
 import br.gabrielsmartins.smartpayment.application.domain.state.OrderLog;
+import br.gabrielsmartins.smartpayment.application.ports.in.ProcessFraudAnalysisUseCase;
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
@@ -41,7 +42,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @MockBeans({
-        @MockBean(SubmitOrderUseCase.class)
+        @MockBean(SubmitOrderUseCase.class),
+        @MockBean(ProcessFraudAnalysisUseCase.class)
 })
 @ExtendWith(SpringExtension.class)
 @EmbeddedKafka(partitions = 1, controlledShutdown = true)

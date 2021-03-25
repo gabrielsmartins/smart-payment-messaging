@@ -5,6 +5,7 @@ import br.gabrielsmartins.smartpayment.application.ports.in.SendNotificationOrde
 import br.gabrielsmartins.smartpayment.application.ports.in.SubmitOrderUseCase;
 import br.gabrielsmartins.smartpayment.common.stereotype.UseCase;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
@@ -15,12 +16,12 @@ public class SubmitOrderService implements SubmitOrderUseCase {
 	private final SendNotificationOrderUseCase useCase;
 
 	@Override
-	public Order submit(SubmitOrderCommand command) {
+	public Mono<Order> submit(SubmitOrderCommand command) {
 		Order order = command.getOrder();
 		this.useCase.send(order);
 		order.setCreatedAt(LocalDateTime.now());
 		order.next();
-		return order;
+		return Mono.just(order);
 	}
 
 }

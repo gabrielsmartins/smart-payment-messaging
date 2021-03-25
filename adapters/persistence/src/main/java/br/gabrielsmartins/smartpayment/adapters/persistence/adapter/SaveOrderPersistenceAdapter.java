@@ -7,6 +7,7 @@ import br.gabrielsmartins.smartpayment.application.domain.Order;
 import br.gabrielsmartins.smartpayment.application.ports.out.SaveOrderPort;
 import br.gabrielsmartins.smartpayment.common.stereotype.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -16,10 +17,12 @@ public class SaveOrderPersistenceAdapter implements SaveOrderPort {
     private final OrderPersistenceMapper mapper;
 
     @Override
-    public Order save(Order order) {
+    public Mono<Order> save(Order order) {
         OrderEntity orderEntity = mapper.mapToEntity(order);
-        OrderEntity savedOrderEntity = service.save(orderEntity);
-        order.setId(savedOrderEntity.getId());
-        return mapper.mapToDomain(savedOrderEntity);
+        return service.save(orderEntity)
+                      .flatMap(savedOrderEntity -> {
+                          order.setId(savedOrderEntity.getId());
+                          return Mono.just(mapper.mapToDomain(savedOrderEntity));
+                      });
     }
 }
